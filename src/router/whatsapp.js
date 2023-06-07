@@ -82,10 +82,12 @@ let button = new Buttons('*Como posso te ajudar?*',
 
 
 client.on('message', async msg => {
-  client.sendMessage(msg.from, button);
-});
-
-client.on('message', async msg => {
+  if(msg.body === 'Menu' || msg.body === 'menu'){
+    client.sendMessage(msg.from, button);
+    }
+  if(msg.body === 'Suporte' || msg.body === 'suporte'){
+      client.sendMessage(msg.from, "Vamos encaminhar o seu pedido para um humano.");
+      }  
   if(msg.body === "ajuda" || msg.body === "Ajuda"){
       client.sendMessage(msg.from, "Vamos lá! Como eu sou uma\n inteligência artificial (um robô mesmo rsrs),"+ 
                                   "que aprende a cada conversa, consigo entender melhor o que você precisa quando você me manda *um" +

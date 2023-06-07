@@ -7,7 +7,7 @@ const index = require('./router/index');
 const user = require('./router/user');
 const whatsapp = require('./router/whatsapp');
 
-// conexao com banco de dado
+// conexao com banco de dado...
 mongo.connect(process.env.MONGO_CONNECT_URI).
     then(() => console.log("Connected to db")).catch(error => console.log("Ocorreu um erro ao criar o banco de dados!" + error.message));
 
