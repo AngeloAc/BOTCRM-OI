@@ -6,7 +6,7 @@ const http = require('http'); // importando o http
 require('dotenv').config(); // importando e configurando o dotenv
 
 
-const port = normalizePort(process.env.PORT || 3000);
+const port = normalizePort(process.env.PORT || 3030);
 const server = http.createServer(app);
 
 server.listen(port);
