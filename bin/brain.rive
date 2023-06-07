@@ -1,0 +1,37 @@
+! version = 2.0
+
++ hello bot
+- Hello, human!
+
++ how are you
+- I'm great, how are you?
+- I'm good, you?
+- Good :) you?
+- Great! You?
+- I'm fine, thanks for asking!
+
++ what is up
+- Not much, you?
+- nm, you?
+- Not a lot, you?
+
++ you are a bot
+- How did you know I'm a machine?
+
++ my name is *
+- Nice to meet you, <star1>!
+
++ * told me to say *
+- Why would <star1> tell you to say "<star2>"?
+- Did you say "<star2>" after <star1> told you to?
+
++ i am * years old
+- A lot of people are <star1> years old.
+
++ *
+- I'm not sure how to reply to that.
+- Try asking your question a different way.
+- Let's change the subject.
+
++ google *
+- Google search: <button href="http://google.com/search?q=<star>">Click Here</button>
