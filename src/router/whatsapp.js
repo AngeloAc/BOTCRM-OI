@@ -63,7 +63,7 @@ const route = router.get('/', (req, res, next) => {
 
  });
 
-module.exports = route;
+
 
 
 
@@ -74,14 +74,18 @@ module.exports = route;
 // var bot =  new rs({utf8:true});
 
 
-
-
-
+let button = new Buttons('*Como posso te ajudar?*',
+[{body:'Conta'},
+{body:'Suporte técnico'},
+{body:'Pagamento'},
+],'MENU','Joice, inteligencia artificial');
 
 
 client.on('message', async msg => {
-     
+  client.sendMessage(msg.from, button);
+});
 
+client.on('message', async msg => {
   if(msg.body === "ajuda" || msg.body === "Ajuda"){
       client.sendMessage(msg.from, "Vamos lá! Como eu sou uma\n inteligência artificial (um robô mesmo rsrs),"+ 
                                   "que aprende a cada conversa, consigo entender melhor o que você precisa quando você me manda *um" +
@@ -123,3 +127,5 @@ client.on('message', async msg => {
 // }
   
 // });
+
+module.exports = route;
