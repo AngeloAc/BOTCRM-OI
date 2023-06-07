@@ -79,41 +79,22 @@ module.exports = route;
 
 
 
-
-
-// app.get('/', (req, res) => {
-//   // Gerar o conteúdo do QR Code
-//   const qrCodeContent = qrCode;
-
-//   // Gerar o código QR baseado no conteúdo
-//   QRCODE.toDataURL(qrCodeContent, (err, url) => {
-//     if (err) {
-//       console.error('Erro ao gerar o código QR:', err);
-//       res.status(500).send('Erro ao gerar o código QR');
-//     } else {
-//       // Exibir o código QR no navegador
-//       const qrCodeHtml = `<img src="${url}" alt="QR Code">`;
-//       res.send(qrCodeHtml);
-//     }
-//   });
-// });
-
-// client.on('message', async msg => {
+client.on('message', async msg => {
      
 
-//   if(msg.body === "ajuda" || msg.body === "Ajuda"){
-//       client.sendMessage(msg.from, "Vamos lá! Como eu sou uma\n inteligência artificial (um robô mesmo rsrs),"+ 
-//                                   "que aprende a cada conversa, consigo entender melhor o que você precisa quando você me manda *um" +
-//                                   "assunto por vez em frases curtas.* 🤓\n\n" +
-//                                   "Por exemplo:\n\n" +
-//                                   "1 - Preciso da 2a via da conta\n" +
-//                                   "2 - Estou sem sinal de internet\n" +
-//                                   "3 - Quero comprar ponto de TV\n" +
-//                                   "4 - Como ter Oi Fibra aqui em casa?\n" +
-//                                   "5 - Preciso recarregar meu celular\n"
-//       )
-//   } 
-  
+  if(msg.body === "ajuda" || msg.body === "Ajuda"){
+      client.sendMessage(msg.from, "Vamos lá! Como eu sou uma\n inteligência artificial (um robô mesmo rsrs),"+ 
+                                  "que aprende a cada conversa, consigo entender melhor o que você precisa quando você me manda *um" +
+                                  "assunto por vez em frases curtas.* 🤓\n\n" +
+                                  "Por exemplo:\n\n" +
+                                  "1 - Preciso da 2a via da conta\n" +
+                                  "2 - Estou sem sinal de internet\n" +
+                                  "3 - Quero comprar ponto de TV\n" +
+                                  "4 - Como ter Oi Fibra aqui em casa?\n" +
+                                  "5 - Preciso recarregar meu celular\n"
+      )
+  } 
+});
 //   bot.loadDirectory("brain").then(loading_done).catch(loading_error);
 //   //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
 
