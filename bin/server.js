@@ -1,4 +1,5 @@
-// create a server
+
+// create a server - bot
 const app = require('../src/app'); // importando os dados do App
 const express = require('express'); // importando express
 const http = require('http'); // importando o http
