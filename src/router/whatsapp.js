@@ -89,15 +89,15 @@ client.on('message', async msg => {
       client.sendMessage(msg.from, "Vamos encaminhar o seu pedido para um humano.");
       }  
   if(msg.body === "ajuda" || msg.body === "Ajuda"){
-      client.sendMessage(msg.from, "Vamos lá! Como eu sou uma\n inteligência artificial (um robô mesmo rsrs),"+ 
-                                  "que aprende a cada conversa, consigo entender melhor o que você precisa quando você me manda *um" +
-                                  "assunto por vez em frases curtas.* 🤓\n\n" +
-                                  "Por exemplo:\n\n" +
-                                  "1 - Preciso da 2a via da conta\n" +
-                                  "2 - Estou sem sinal de internet\n" +
-                                  "3 - Quero comprar ponto de TV\n" +
-                                  "4 - Como ter Oi Fibra aqui em casa?\n" +
-                                  "5 - Preciso recarregar meu celular\n"
+      client.sendMessage(msg.from,
+                                  "OINET MENU:\n\n" +
+                                  "1) Oinet Money\n" +
+                                  "2) Tarif. Voz\n" +
+                                  "3) Tarif. Net\n" +
+                                  "4) Planos Internt Casa\n" +
+                                  "5) Pontos\n" +
+                                  "6) Serviços\n" +
+                                  "7) Entretenimento\n" 
       )
   } 
 });
