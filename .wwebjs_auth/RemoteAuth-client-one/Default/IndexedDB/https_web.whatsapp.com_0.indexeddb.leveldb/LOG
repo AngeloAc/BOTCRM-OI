@@ -15,3 +15,14 @@
 2023/06/08-12:10:00.932 1fe0f Level-0 table #47: started
 2023/06/08-12:10:01.008 1fe0f Level-0 table #47: 1061211 bytes OK
 2023/06/08-12:10:01.032 1fe0f Delete type=0 #38
+2023/06/08-12:10:43.401 ff03 Compacting 1@0 + 4@1 files
+2023/06/08-12:10:43.521 ff03 Generated table #48@0: 24439 keys, 2184143 bytes
+2023/06/08-12:10:43.610 ff03 Generated table #49@0: 15536 keys, 2198438 bytes
+2023/06/08-12:10:43.702 ff03 Generated table #50@0: 34203 keys, 1480761 bytes
+2023/06/08-12:10:43.703 ff03 Compacted 1@0 + 4@1 files => 5863342 bytes
+2023/06/08-12:10:43.718 ff03 compacted to: files[ 0 3 1 0 0 0 0 ]
+2023/06/08-12:10:43.719 ff03 Delete type=2 #17
+2023/06/08-12:10:43.719 ff03 Delete type=2 #43
+2023/06/08-12:10:43.719 ff03 Delete type=2 #42
+2023/06/08-12:10:43.719 ff03 Delete type=2 #41
+2023/06/08-12:10:43.719 ff03 Delete type=2 #47
