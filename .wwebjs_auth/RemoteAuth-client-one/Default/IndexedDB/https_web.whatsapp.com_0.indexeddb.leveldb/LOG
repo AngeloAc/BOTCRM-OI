@@ -1,0 +1,17 @@
+2023/06/08-12:09:26.594 1150b Reusing MANIFEST /Users/euclidesdecarvalho/Documents/ISO/ISP/WEBAPP/APP/BOTCRM-OI/.wwebjs_auth/RemoteAuth-client-one/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/08-12:09:26.595 1150b Recovering log #38
+2023/06/08-12:09:26.815 1150b Reusing old log /Users/euclidesdecarvalho/Documents/ISO/ISP/WEBAPP/APP/BOTCRM-OI/.wwebjs_auth/RemoteAuth-client-one/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000038.log 
+2023/06/08-12:09:26.816 1150b Delete type=2 #39
+2023/06/08-12:09:26.816 1150b Delete type=2 #34
+2023/06/08-12:09:26.816 1150b Delete type=2 #35
+2023/06/08-12:09:26.816 1150b Delete type=2 #37
+2023/06/08-12:09:26.816 1150b Delete type=2 #36
+2023/06/08-12:09:42.785 a903 Compacting 1@1 + 1@2 files
+2023/06/08-12:09:42.901 a903 Generated table #45@1: 18007 keys, 1617234 bytes
+2023/06/08-12:09:42.902 a903 Compacted 1@1 + 1@2 files => 1617234 bytes
+2023/06/08-12:09:42.929 a903 compacted to: files[ 0 4 1 0 0 0 0 ]
+2023/06/08-12:09:42.932 a903 Delete type=2 #5
+2023/06/08-12:09:42.932 a903 Delete type=2 #40
+2023/06/08-12:10:00.932 1fe0f Level-0 table #47: started
+2023/06/08-12:10:01.008 1fe0f Level-0 table #47: 1061211 bytes OK
+2023/06/08-12:10:01.032 1fe0f Delete type=0 #38

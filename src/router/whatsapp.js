@@ -2,46 +2,89 @@ const express = require('express');
 const router = express.Router();
 //whatsapp
 const fs = require('fs');
-const {Client, LocalAuth} = require('whatsapp-web.js');
+const { Client, RemoteAuth } = require('whatsapp-web.js');
+// Require database
+const { MongoStore } = require('wwebjs-mongo');
+const mongoose = require('mongoose');
 const { Buttons, List } = require('whatsapp-web.js');
 
 const qrcode = require('qrcode-terminal');
 const QRCODE = require('qrcode')
 let qrCode = "no code"; 
-
-//criar uma nova sessão no whatsapp
-const SESSION_FILE_PATH = './session.json';
-let sessionData;
-if(fs.existsSync(SESSION_FILE_PATH)) {
-    sessionData = require(SESSION_FILE_PATH);
-}
-//creating new client
-const client = new Client({
-    puppeteer: {
-        executablePath: '/usr/bin/brave-browser-stable',
-      },
-      authStrategy: new LocalAuth({
-        clientId: "client-one"
-      }),
-      puppeteer: {
-        headless: true,
-      }
-});
+let store;
 
 
-
-client.on('qr', qr => {
+// Load the session data
+mongoose.connect(process.env.MONGO_CONNECT_URI).then(() => {
+  const store = new MongoStore({ mongoose: mongoose });
+  const client = new Client({
+      authStrategy: new RemoteAuth({
+          store: store,
+          clientId: 'client-one',
+          backupSyncIntervalMs: 300000
+      })
+  });
+  client.on('qr', qr => {
     //qrcode.generate(qr, {small: true});
     qrCode = qr;
     console.log("QR. CODE IS RUNNING")
 });
 
+client.on('authenticated', () => {
+  console.log('Authenticated...')
+});
+
 
 client.on('ready', qr =>{
-    console.log('client is ready')
-})
- 
-client.initialize();
+    console.log('Client is ready')
+});
+
+client.on('remote_session_saved', () => {
+  console.log("Remote session is saved...");
+});
+
+  client.initialize();
+
+  let button = new Buttons('*Como posso te ajudar?*',
+[{body:'Conta'},
+{body:'Suporte técnico'},
+{body:'Pagamento'},
+],'MENU','Joice, inteligencia artificial');
+
+
+client.on('message', async msg => {
+  if(msg.body === 'Menu' || msg.body === 'menu'){
+    client.sendMessage(msg.from, button);
+    }
+  if(msg.body === 'Suporte' || msg.body === 'suporte'){
+      client.sendMessage(msg.from, "Vamos encaminhar o seu pedido para um humano.");
+      }  
+  if(msg.body === "ajuda" || msg.body === "Ajuda"){
+      client.sendMessage(msg.from,
+                                  "OINET MENU:\n\n" +
+                                  "1) Oinet Money\n" +
+                                  "2) Tarif. Voz\n" +
+                                  "3) Tarif. Net\n" +
+                                  "4) Planos Internt Casa\n" +
+                                  "5) Pontos\n" +
+                                  "6) Serviços\n" +
+                                  "7) Entretenimento\n" 
+      )
+  } 
+});
+
+});
+
+
+
+
+
+// client.on('qr', qr => {
+//     //qrcode.generate(qr, {small: true});
+//     qrCode = qr;
+//     console.log("QR. CODE IS RUNNING")
+// });
+
 
 
 const route = router.get('/', (req, res, next) => {
@@ -74,33 +117,7 @@ const route = router.get('/', (req, res, next) => {
 // var bot =  new rs({utf8:true});
 
 
-let button = new Buttons('*Como posso te ajudar?*',
-[{body:'Conta'},
-{body:'Suporte técnico'},
-{body:'Pagamento'},
-],'MENU','Joice, inteligencia artificial');
 
-
-client.on('message', async msg => {
-  if(msg.body === 'Menu' || msg.body === 'menu'){
-    client.sendMessage(msg.from, button);
-    }
-  if(msg.body === 'Suporte' || msg.body === 'suporte'){
-      client.sendMessage(msg.from, "Vamos encaminhar o seu pedido para um humano.");
-      }  
-  if(msg.body === "ajuda" || msg.body === "Ajuda"){
-      client.sendMessage(msg.from,
-                                  "OINET MENU:\n\n" +
-                                  "1) Oinet Money\n" +
-                                  "2) Tarif. Voz\n" +
-                                  "3) Tarif. Net\n" +
-                                  "4) Planos Internt Casa\n" +
-                                  "5) Pontos\n" +
-                                  "6) Serviços\n" +
-                                  "7) Entretenimento\n" 
-      )
-  } 
-});
 //   bot.loadDirectory("brain").then(loading_done).catch(loading_error);
 //   //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
 
