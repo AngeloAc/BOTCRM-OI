@@ -26,3 +26,10 @@
 2023/06/08-12:10:43.719 ff03 Delete type=2 #42
 2023/06/08-12:10:43.719 ff03 Delete type=2 #41
 2023/06/08-12:10:43.719 ff03 Delete type=2 #47
+2023/06/08-12:13:04.693 1fe0f Compacting 1@1 + 1@2 files
+2023/06/08-12:13:04.816 1fe0f Generated table #51@1: 18783 keys, 2173931 bytes
+2023/06/08-12:13:04.871 1fe0f Generated table #52@1: 1712 keys, 1283274 bytes
+2023/06/08-12:13:04.871 1fe0f Compacted 1@1 + 1@2 files => 3457205 bytes
+2023/06/08-12:13:04.887 1fe0f compacted to: files[ 0 2 2 0 0 0 0 ]
+2023/06/08-12:13:04.888 1fe0f Delete type=2 #48
+2023/06/08-12:13:04.888 1fe0f Delete type=2 #45
