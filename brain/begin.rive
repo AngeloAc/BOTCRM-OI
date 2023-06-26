@@ -1,7 +1,11 @@
 ! version = 2.0
 
-+ hello bot
-- Hello, human!
++ oi
+- Bom dia *Sr. Euclides D'Karvalho*,\n\n
+^ Bem vindo ao atendimento da *OINET*.\n
+^ Eu sou a Isa (Inteligência Artificial da *OINET*).\n
+^ Estou aqui para ajudar.\n\n
+^ *_Por favor, selecione o "Menu Opções"_*\n
 
 + how are you
 - I'm great, how are you?
@@ -28,10 +32,5 @@
 + i am * years old
 - A lot of people are <star1> years old.
 
-+ *
-- I'm not sure how to reply to that.
-- Try asking your question a different way.
-- Let's change the subject.
-
 + google *
-- Google search: <button href="http://google.com/search?q=<star>">Click Here</button>
+- Google search: href="http://google.com/search?q=<star>"
