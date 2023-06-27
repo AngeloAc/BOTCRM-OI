@@ -1,3 +1,18 @@
 2023/06/27-09:33:59.063 a203 Reusing MANIFEST /Users/euclidesdecarvalho/Documents/ISO/ISP/WEBAPP/APP/BOTCRM-OI/.wwebjs_auth/RemoteAuth-client-one/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
 2023/06/27-09:33:59.063 a203 Recovering log #510
 2023/06/27-09:33:59.324 a203 Reusing old log /Users/euclidesdecarvalho/Documents/ISO/ISP/WEBAPP/APP/BOTCRM-OI/.wwebjs_auth/RemoteAuth-client-one/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000510.log 
+2023/06/27-09:34:39.302 10f07 Level-0 table #523: started
+2023/06/27-09:34:39.371 10f07 Level-0 table #523: 1427814 bytes OK
+2023/06/27-09:34:39.394 10f07 Delete type=0 #510
+2023/06/27-09:34:39.847 10f07 Compacting 1@1 + 9@2 files
+2023/06/27-09:34:40.189 10f07 Generated table #524@1: 84913 keys, 2234020 bytes
+2023/06/27-09:34:40.341 10f07 Generated table #525@1: 41227 keys, 2611940 bytes
+2023/06/27-09:34:40.420 10f07 Generated table #526@1: 6340 keys, 2148494 bytes
+2023/06/27-09:34:40.491 10f07 Generated table #527@1: 2415 keys, 2147227 bytes
+2023/06/27-09:34:40.578 10f07 Generated table #528@1: 6110 keys, 2158384 bytes
+2023/06/27-09:34:40.763 10f07 Generated table #529@1: 30143 keys, 2255745 bytes
+2023/06/27-09:34:40.876 10f07 Generated table #530@1: 36122 keys, 2187512 bytes
+2023/06/27-09:34:41.231 10f07 Generated table #531@1: 104406 keys, 2256681 bytes
+2023/06/27-09:34:41.323 10f07 Generated table #532@1: 14084 keys, 363995 bytes
+2023/06/27-09:34:41.323 10f07 Compacted 1@1 + 9@2 files => 18363998 bytes
+2023/06/27-09:34:41.345 10f07 compacted to: files[ 0 0 9 0 0 0 0 ]
