@@ -42,22 +42,22 @@ mongoose.connect(process.env.MONGO_CONNECT_URI).then(() => {
     console.log('Carregando... ', percent, message);
     percentual = percent;
     message = message;
-});
+  });
 
-client.on('authenticated', () => {
+  client.on('authenticated', () => {
     console.log('Autenticado');
     auth = true;
-});
+  });
 
-client.on('auth_failure', msg => {
+  client.on('auth_failure', msg => {
     // Fired if session restore was unsuccessful
     console.error('Falha ao autenticar ', msg);
-});
+  });
 
-client.on('ready', () => {
+  client.on('ready', () => {
     console.log('Cliente pronto');
     clientOn = "red";
-});
+  });
 
   client.initialize();
 
@@ -71,16 +71,16 @@ client.on('ready', () => {
   client.on('message', async message => {
 
 
-  // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
-  if (message.type === 'chat' && message.body.startsWith('/')) {
-    // Remova o caractere '/' e converta o texto para letras minúsculas
-    const command = message.body.slice(1).toLowerCase();
+    // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
+    if (message.type === 'chat' && message.body.startsWith('/')) {
+      // Remova o caractere '/' e converta o texto para letras minúsculas
+      const command = message.body.slice(1).toLowerCase();
 
-    // Verifique o comando recebido
-    switch (command) {
-      case 'menu':
-        // Simule a verificação da velocidade da conexão
-        const menuResult = "Oinet Menu:\n\n" +
+      // Verifique o comando recebido
+      switch (command) {
+        case 'menu':
+          // Simule a verificação da velocidade da conexão
+          const menuResult = "Oinet Menu:\n\n" +
             "1) _MONEY_ 💵\n" +
             "2) Tarif. Voz\n" +
             "3) Tarif. Net\n" +
@@ -89,31 +89,31 @@ client.on('ready', () => {
             "6) Serviços\n" +
             "7) Cadastrar-se\n" +
             "8) Entretenimento\n";
-        await  setTimeout(() => {
-          message.reply(menuResult);
-          client.on('message', msg =>{
-            message.reply("Opção: " + msg.body);
-          })
-          return  
-      }, 3000);
-        break;
-      case 'velocidade':
-        // Simule a verificação da velocidade da conexão
-        const speedTestResult = 'Velocidade da conexão: 50 Mbps';
-        await message.reply(speedTestResult);
-        break;
-      case 'suporte':
-        // Simule o encaminhamento para o suporte técnico
-        const supportMessage = 'O suporte técnico entrará em contato em breve.';
-        await message.reply(supportMessage);
-        break;
-      default:
-        // Comando inválido
-        const errorMessage = 'Comando inválido. Por favor, tente novamente.';
-        await message.reply(errorMessage);
-        break;
+          await setTimeout(() => {
+            message.reply(menuResult);
+            client.on('message', msg => {
+              message.reply("Opção: " + msg.body);
+            })
+            return
+          }, 3000);
+          break;
+        case 'velocidade':
+          // Simule a verificação da velocidade da conexão
+          const speedTestResult = 'Velocidade da conexão: 50 Mbps';
+          await message.reply(speedTestResult);
+          break;
+        case 'suporte':
+          // Simule o encaminhamento para o suporte técnico
+          const supportMessage = 'O suporte técnico entrará em contato em breve.';
+          await message.reply(supportMessage);
+          break;
+        default:
+          // Comando inválido
+          const errorMessage = 'Comando inválido. Por favor, tente novamente.';
+          await message.reply(errorMessage);
+          break;
+      }
     }
-  }
 
     // if (msg.body === 'Menu' || msg.body === 'menu') {
     //   client.sendMessage(msg.from, button);
@@ -152,7 +152,7 @@ client.on('ready', () => {
         // NOTE: the API has changed in v2.0.0 and returns a Promise now.
 
         bot.reply(username, message.body).then(function (reply) {
-          client.sendMessage(message.from, reply);
+          //client.sendMessage(message.from, reply);
         });
 
       }
@@ -178,8 +178,8 @@ const route = router.get('/', (req, res, next) => {
       res.status(500).send('Erro ao gerar o código QR');
     } else {
       // Exibir o código QR no navegador
-      const qrCodeHtml = 
-      `
+      const qrCodeHtml =
+        `
       <head>
         <style>
         .btn {
