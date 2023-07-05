@@ -5,7 +5,6 @@ const express = require('express'); // importando express
 const http = require('http'); // importando o http
 require('dotenv').config(); // importando e configurando o dotenv
 
-
 const port = normalizePort(process.env.PORT || 3030);
 const server = http.createServer(app);
 
@@ -28,12 +27,4 @@ function normalizePort(val) {
 function error() {
 
 }
-
-
-
-
-
-
-
-
 

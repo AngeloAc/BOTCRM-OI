@@ -1,3 +1,66 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Conectar-se ao WebSocket
+    const socket = new WebSocket('ws://localhost:3000');
+
+    // Lidar com a mensagem recebida do WebSocket
+    socket.onmessage = function(event) {
+      // Converter a mensagem recebida em um objeto JavaScript
+      const data = JSON.parse(event.data);
+
+      // Atualizar os valores do gráfico com os dados recebidos
+      updateChart(data.labels, data.values);
+    };
+
+    let chart = null; // Variável para armazenar o objeto do gráfico
+
+  // ...
+
+  // Função para atualizar o gráfico
+  function updateChart(labels, values) {
+    const ctx = document.getElementById('chart').getContext('2d');
+
+    // Destruir o gráfico existente, se existir
+    if (chart) {
+      chart.destroy();
+    }
+
+    // Criar um novo gráfico
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Valores',
+          data: values,
+          backgroundColor: 'rgba(0, 123, 255, 0.5)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  </script>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <canvas id="chart"></canvas>
+</body>
+</html> -->
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -192,21 +255,47 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
 
   <script>
-    // Exemplo de gráfico usando a biblioteca Chart.js
+  
+    // Conectar-se ao WebSocket
+    const socket = new WebSocket('ws://localhost:3000');
+
+    // Lidar com a mensagem recebida do WebSocket
+    socket.onmessage = function(event) {
+      // Converter a mensagem recebida em um objeto JavaScript
+      const data = JSON.parse(event.data);
+
+      // Atualizar os valores do gráfico com os dados recebidos
+      updateChart(data.labels, data.values);
+    };
+
+    let chart = null; // Variável para armazenar o objeto do gráfico
+
+  // ...
+
+  // Função para atualizar o gráfico
+  function updateChart(labels, values) {
     const ctx = document.getElementById('chart').getContext('2d');
-    new Chart(ctx, {
+
+    // Destruir o gráfico existente, se existir
+    if (chart) {
+      chart.destroy();
+    }
+
+    // Criar um novo gráfico
+    chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+        labels: labels,
         datasets: [{
-          label: 'Vendas',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: '#3498db',
-          borderColor: '#3498db',
+          label: 'Valores',
+          data: values,
+          backgroundColor: 'rgba(0, 123, 255, 0.5)',
+          borderColor: 'rgba(0, 123, 255, 1)',
           borderWidth: 1
         }]
       },
       options: {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true
@@ -214,6 +303,8 @@
         }
       }
     });
+  }
+  
 
         // Exemplo de gráfico usando a biblioteca Chart.js
         const ctx1 = document.getElementById('chart1').getContext('2d');

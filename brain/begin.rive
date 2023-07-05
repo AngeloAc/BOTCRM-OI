@@ -1,11 +1,7 @@
 ! version = 2.0
 
-+ oi
-- Bom dia *Sr. Euclides D'Karvalho*,\n\n
-^ Bem vindo ao atendimento da *OINET*.\n
-^ Eu sou a Isa (Inteligência Artificial da *OINET*).\n
-^ Estou aqui para ajudar.\n\n
-^ *_Por favor, selecione o "Menu Opções"_*\n
++ saudação
+- Seja bem-vindo, eu sou a _*OlivIA*_ a sua nova assistente virtual, estou aqui para lhe ajudar com as tarefas mais simples do seu dia a dia.\n\nPodes por favor me dizer o seu *nome*.
 
 + how are you
 - I'm great, how are you?

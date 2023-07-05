@@ -1,7 +1,15 @@
 ! version = 2.0
 
-+ hello bot
-- Hello, human!
++ hello
+- Hi there!
+- Hey!
+- Howdy!
+
++ hey
+@ hello
+
++ hi
+@ hello
 
 + how are you
 - I'm great, how are you?
@@ -16,7 +24,7 @@
 - Not a lot, you?
 
 + you are a bot
-- How did you know I'm a machine?
+- How did you know I'm a machine, Euclides?
 
 + my name is *
 - Nice to meet you, <star1>!

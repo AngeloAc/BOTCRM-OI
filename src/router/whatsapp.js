@@ -6,8 +6,9 @@ const { Client, RemoteAuth } = require('whatsapp-web.js');
 // Require database
 const { MongoStore } = require('wwebjs-mongo');
 const mongoose = require('mongoose');
-const { Buttons, List } = require('whatsapp-web.js');
-
+const { Buttons, List, MessageMedia } = require('whatsapp-web.js');
+const { generateMeta, generateImage, audioTotext } = require('../../bin/controller');
+const whatsapp_repository = require('../repository/whatsapp_repository');
 const qrcode = require('qrcode-terminal');
 const QRCODE = require('qrcode')
 let qrCode = "www.oinet.ao";
@@ -24,163 +25,239 @@ var bot = new rs({ utf8: true });
 
 // Load the session data
 mongoose.connect(process.env.MONGO_CONNECT_URI).then(() => {
-  const store = new MongoStore({ mongoose: mongoose });
-  const client = new Client({
-    authStrategy: new RemoteAuth({
-      store: store,
-      clientId: 'client-one',
-      backupSyncIntervalMs: 300000
-    })
-  });
-  client.on('qr', qr => {
-    //qrcode.generate(qr, {small: true});
-    qrCode = qr;
-    console.log("QR. CODE IS RUNNING")
-  });
+    const store = new MongoStore({ mongoose: mongoose });
+    const client = new Client({
+        authStrategy: new RemoteAuth({
+            store: store,
+            clientId: 'client-one',
+            backupSyncIntervalMs: 300000
+        })
+    });
+    client.on('qr', qr => {
+        //qrcode.generate(qr, {small: true});
+        qrCode = qr;
+        console.log("QR. CODE IS RUNNING")
+    });
 
-  client.on('loading_screen', (percent, message) => {
-    console.log('Carregando... ', percent, message);
-    percentual = percent;
-    message = message;
-  });
+    client.on('loading_screen', (percent, message) => {
+        console.log('Carregando... ', percent, message);
+        percentual = percent;
+        message = message;
+    });
 
-  client.on('authenticated', () => {
-    console.log('Autenticado');
-    auth = true;
-  });
+    client.on('authenticated', () => {
+        console.log('Autenticado');
+        auth = true;
+    });
 
-  client.on('auth_failure', msg => {
-    // Fired if session restore was unsuccessful
-    console.error('Falha ao autenticar ', msg);
-  });
+    client.on('auth_failure', msg => {
+        // Fired if session restore was unsuccessful
+        console.error('Falha ao autenticar ', msg);
+    });
 
-  client.on('ready', () => {
-    console.log('Cliente pronto');
-    clientOn = "red";
-  });
+    client.on('ready', () => {
+        console.log('Cliente pronto');
+        clientOn = "red";
+    });
 
-  client.initialize();
+    client.initialize();
 
-  let button = new Buttons('*Como posso te ajudar?*',
-    [{ body: 'Conta' },
-    { body: 'Suporte técnico' },
-    { body: 'Pagamento' },
-    ], 'MENU', 'Joice, inteligencia artificial');
-
-
-  client.on('message', async message => {
+    let button = new Buttons('*Como posso te ajudar?*',
+        [{ body: 'Conta' },
+        { body: 'Suporte técnico' },
+        { body: 'Pagamento' },
+        ], 'MENU', 'Joice, inteligencia artificial');
 
 
-    // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
-    if (message.type === 'chat' && message.body.startsWith('/')) {
-      // Remova o caractere '/' e converta o texto para letras minúsculas
-      const command = message.body.slice(1).toLowerCase();
 
-      // Verifique o comando recebido
-      switch (command) {
-        case 'menu':
-          // Simule a verificação da velocidade da conexão
-          const menuResult = "Oinet Menu:\n\n" +
-            "1) _MONEY_ 💵\n" +
-            "2) Tarif. Voz\n" +
-            "3) Tarif. Net\n" +
-            "4) *Planos Internt Casa*\n" +
-            "5) Pontos\n" +
-            "6) Serviços\n" +
-            "7) Cadastrar-se\n" +
-            "8) Entretenimento\n";
-          await setTimeout(() => {
-            message.reply(menuResult);
-            client.on('message', msg => {
-              message.reply("Opção: " + msg.body);
+    client.on('message', async message => {
+
+
+        whatsapp_repository.getUserByName(message.from)
+            .then(async result => {
+                if (result === null) {
+                    whatsapp_repository.postar("", message.from);
+                    bot.loadDirectory("brain").then(loading_done).catch(loading_error);
+                    //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
+
+                    function loading_done() {
+                        console.log("Bot has finished loading!");
+                        // Now the replies must be sorted!
+                        bot.sortReplies();
+
+                        // And now we're free to get a reply from the brain!
+
+                        // RiveScript remembers user data by their username and can tell
+                        // multiple users apart.
+                        let username = "local-user";
+
+                        // NOTE: the API has changed in v2.0.0 and returns a Promise now.
+
+                        bot.reply(username, "saudação").then(function (reply) {
+                            client.sendMessage(message.from, reply);
+
+                        });
+                    }
+
+                    // It's good to catch errors too!
+                    function loading_error(error, filename, lineno) {
+                        console.log("Error when loading files: " + error);
+                    }
+                }
+
+                else {
+                    // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
+                    if (message.type === 'chat' && message.body.startsWith('/')) {
+                        // Remova o caractere '/' e converta o texto para letras minúsculas
+                        const command = message.body.slice(1).toLowerCase();
+
+
+                        // Verifique o comando recebido
+                        switch (command) {
+                            case '':
+
+
+                                break;
+                            case 'menu':
+                                client.sendMessage(message.from,
+                                    '===== MENU =======\n' +
+                                    '1. comandos\n' +
+                                    '2. consultar token\n' +
+                                    '3. consultar IA\n' +
+                                    '4. ajuda\n' +
+                                    '5. actualizar conta\n' +
+                                    '6. sobre\n\n' +
+                                    '7. deletar conta.\n\n' +
+                                    '==================' +
+                                    '\n* os comandos devem preceder de "/" para' +
+                                    ' serem validos.'
+                                );
+                                break;
+                            case 'ajuda':
+
+                                break;
+                            case 'image':
+                                const media = await MessageMedia.fromUrl('https://oaidalleapiprodscus.blob.core.windows.net/private/org-LAdJKVQRHP0E3Lo17Wm3TvxM/user-XNTTGVM3HH77IOlYMlCMgddj/img-Ss9k3B0BfgqVqj5fpkKWcGWA.png?st=2023-07-02T16%3A03%3A34Z&se=2023-07-02T18%3A03%3A34Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-01T20%3A28%3A55Z&ske=2023-07-02T20%3A28%3A55Z&sks=b&skv=2021-08-06&sig=J4UcK8N%2BemGXcbI2KQnAWZis%2BgkPdrWstnkjQDcZepc%3D');
+                                client.sendMessage(message.from, media);
+                                break;
+                            case 'sendimage':
+
+                                break;
+                            case 'user':
+
+                                break;
+                            case 'button':
+                                let button1 = new Buttons('Button body', [{ body: 'Aceptar' }, { body: 'rechazar' }], 'title', 'footer');
+                                client.sendMessage(message.from, button1)
+                                    .then(result => console.log("sucess with btn"))
+                                    .catch(error => console.log(error));
+                                break;
+                            default:
+                                bot.loadDirectory("brain").then(loading_done).catch(loading_error);
+                                //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
+
+                                function loading_done() {
+                                    console.log("Bot has finished loading!");
+                                    // Now the replies must be sorted!
+                                    bot.sortReplies();
+
+                                    // And now we're free to get a reply from the brain!
+
+                                    // RiveScript remembers user data by their username and can tell
+                                    // multiple users apart.
+                                    let username = "local-user";
+
+                                    // NOTE: the API has changed in v2.0.0 and returns a Promise now.
+
+                                    bot.reply(username, command).then(function (reply) {
+                                        client.sendMessage(message.from, reply);
+
+                                    });
+                                }
+
+                                // It's good to catch errors too!
+                                function loading_error(error, filename, lineno) {
+                                    console.log("Error when loading files: " + error);
+                                }
+                                break;
+                        }
+                    }
+
+                    else if (message.type === 'chat' && message.body.startsWith("*")) {
+                        // Remova o caractere '/' e converta o texto para letras minúsculas
+                        const command = message.body.slice(6).toLowerCase();
+
+                        generateImage(command).
+                            then(async result => {
+                                const media = await MessageMedia.fromUrl(result);
+                                client.sendMessage(message.from, media);
+                                //console.log(result);
+                            }).
+                            catch(error => console.log(error));
+                        // Verifique o comando recebido
+
+                    }
+                    else {
+
+                        if (message.hasMedia) {
+                            const time = new Date(message.timestamp * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1].replaceAll(':', '-')
+                            const date = new Date(message.timestamp * 1000).toISOString().substring(0, 10);
+                            const person = message['_data']['notifyName'];
+                            const phoneNumber = message.from.replaceAll('@c.us', '');
+                            const media = await message.downloadMedia();
+                            // do something with the media data here
+                            const folder = process.cwd() + '/img/' + phoneNumber + '_' + person + '/' + date + '/';
+                            const filename = folder + time + '_' + message.id.id + '.' + media.mimetype.split('/')[1];
+                            fs.mkdirSync(folder, { recursive: true });
+                            fs.writeFileSync(filename, Buffer.from(media.data, 'base64').toString('binary'), 'binary');
+                            if (media.mimetype === 'audio/ogg; codecs=opus') {
+                                console.log('AUDIO SENT: ');
+
+                            } else if (media.mimetype === 'image/jpeg') {
+                                console.log("IMAGE SENT: ");
+                            }
+                        }
+                        else {
+                            generateMeta(message.body).
+                                then(result => {
+                                    if (result === null) {
+                                        client.sendMessage(message.from, "O seu token expirou, tente mais tarde.");
+                                        console.log('resposta nula ' + result);
+                                        return;
+                                    }
+                                    client.sendMessage(message.from, result);
+                                }).
+                                catch(error => console.log(error));
+                        }
+
+
+                    }
+                }
             })
-            return
-          }, 3000);
-          break;
-        case 'velocidade':
-          // Simule a verificação da velocidade da conexão
-          const speedTestResult = 'Velocidade da conexão: 50 Mbps';
-          await message.reply(speedTestResult);
-          break;
-        case 'suporte':
-          // Simule o encaminhamento para o suporte técnico
-          const supportMessage = 'O suporte técnico entrará em contato em breve.';
-          await message.reply(supportMessage);
-          break;
-        default:
-          // Comando inválido
-          const errorMessage = 'Comando inválido. Por favor, tente novamente.';
-          await message.reply(errorMessage);
-          break;
-      }
-    }
-
-    // if (msg.body === 'Menu' || msg.body === 'menu') {
-    //   client.sendMessage(msg.from, button);
-    // }
-    // if (msg.body === 'Suporte' || msg.body === 'suporte') {
-    //   client.sendMessage(msg.from, "Vamos encaminhar o seu pedido para um humano.");
-    // }
-    // if (msg.body === "Menu" || msg.body === "menu") {
-    //   client.sendMessage(msg.from,
-    //     "OINET MENU:\n\n" +
-    //     "1) Oinet Money\n" +
-    //     "2) Tarif. Voz\n" +
-    //     "3) Tarif. Net\n" +
-    //     "4) Planos Internt Casa\n" +
-    //     "5) Pontos\n" +
-    //     "6) Serviços\n" +
-    //     "7) Entretenimento\n"
-    //   )
-    // }
-    else {
-
-      bot.loadDirectory("brain").then(loading_done).catch(loading_error);
-      //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
-
-      function loading_done() {
-        console.log("Bot has finished loading!");
-        // Now the replies must be sorted!
-        bot.sortReplies();
-
-        // And now we're free to get a reply from the brain!
-
-        // RiveScript remembers user data by their username and can tell
-        // multiple users apart.
-        let username = "local-user";
-
-        // NOTE: the API has changed in v2.0.0 and returns a Promise now.
-
-        bot.reply(username, message.body).then(function (reply) {
-          //client.sendMessage(message.from, reply);
-        });
-
-      }
-
-      // It's good to catch errors too!
-      function loading_error(error, filename, lineno) {
-        console.log("Error when loading files: " + error);
-      }
-    }
-  });
+            .catch(error => console.log(error))
+    });
 
 });
 
-const route = router.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
 
-  //Gerar o conteúdo do QR Code
-  const qrCodeContent = qrCode;
+    //Gerar o conteúdo do QR Code
+    const qrCodeContent = qrCode;
 
-  // Gerar o código QR baseado no conteúdo
-  QRCODE.toDataURL(qrCodeContent, (err, url) => {
-    if (err) {
-      console.error('Erro ao gerar o código QR:', err);
-      res.status(500).send('Erro ao gerar o código QR');
-    } else {
-      // Exibir o código QR no navegador
-      const qrCodeHtml =
-        `
+    // Gerar o código QR baseado no conteúdo
+    QRCODE.toDataURL(qrCodeContent, (err, url) => {
+        if (err) {
+            console.error('Erro ao gerar o código QR:', err);
+            res.status(500).send('Erro ao gerar o código QR');
+        } else {
+            // Exibir o código QR no navegador
+            const qrCodeHtml =
+                `
       <head>
+
+      <!-- p5 -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/addons/p5.sound.min.js"></script>
         <style>
         .btn {
           margin-top: 15px;
@@ -219,8 +296,8 @@ const route = router.get('/', (req, res, next) => {
       <div style="width: 100px; padding-top: 20px; display: flex; align-items: center; justify-content: center;">
       
       <div style="background-color: ${clientOn}; width: 15px; height: 15px;border: 1.5px solid black; border-radius: 50%; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);"></div>
-      </div>
-      <a class="btn" onclick="callMe() href="">Configurar</a>
+      </div >
+      <a class="btn" onclick="abrirNovaPagina()" href="" >Configurar</a>
       </div>
 
       
@@ -255,30 +332,25 @@ const route = router.get('/', (req, res, next) => {
           qrcode.classList.remove('transparente');
           console.log("none user");
         }
+
+        function abrirNovaPagina() {
+          window.open(' ', '_blank');
+        }
       </script>
         
+    
 
       </body>
       `;
-      res.send(qrCodeHtml);
-    }
-  });
+            res.send(qrCodeHtml);
+        }
+    });
 
 });
 
 
 
-
-
-
-
-
-
-
-
-
-
-module.exports = route;
+module.exports = router;
 
 
 
