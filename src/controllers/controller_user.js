@@ -472,6 +472,8 @@ exports.whatsappWeb_install = (async (req, res, next) => {
 
         const nomeNovaPasta = req.body._id;
         const urlRepositorio = 'https://github.com/AngeloAc/WWBEBJS.git';
+        const openApi_token = process.env.OPENAI_API_OI;
+        const mongo_api_token = process.env.MONGO_CONNECT_URI;
 
         //-----
         const nomeArquivo = 'index.js';
@@ -545,9 +547,8 @@ exports.whatsappWeb_install = (async (req, res, next) => {
                         });
                         // -----------
                         fs.writeFile('.env',
-                            `MONGO_CONNECT_URI="mongodb://localhost:27017"
-                        OPENAI_API_OI="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"
-                        TOKEN_KEY="starticaiapi"`,
+                            `MONGO_CONNECT_URI=${{mongo_api_token}},
+                            OPENAI_API_OI=${{openApi_token}},`,
                             'utf8', (err) => {
                                 if (err) {
                                     console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
