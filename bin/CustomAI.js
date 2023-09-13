@@ -1,8 +1,4 @@
-const { OpenAIEmbeddings } = require("langchain/embeddings/openai");
-const { Chroma } = require("langchain/vectorstores/chroma");
 const { OpenAI } = require("langchain/llms/openai");
-const { ConversationalRetrievalQAChain } = require("langchain/chains");
-const { PDFLoader } = require("langchain/document_loaders/fs/pdf");
 const { TextLoader } = require("langchain/document_loaders/fs/text");
 require('dotenv').config();
 

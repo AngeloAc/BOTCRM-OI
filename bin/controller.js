@@ -1,34 +1,9 @@
 const openai = require('./config');
 const fs = require('fs');
 const { OpenAI } = require('langchain/llms/openai');
-const { TextLoader } = require('langchain/document_loaders/fs/text');
-const { HNSWLib } = require('langchain/vectorstores/hnswlib');
-const { OpenAIEmbeddings } = require('langchain/embeddings/openai');
-const { RetrievalQAChain } = require('langchain/chains');
-const { RecursiveCharacterTextSplitter } = require('langchain/text_splitter');
 
-const { Tiktoken } = require("@dqbd/tiktoken/lite");
-const { load } = require("@dqbd/tiktoken/load");
-const registry = require("@dqbd/tiktoken/registry.json");
-const models = require("@dqbd/tiktoken/model_to_encoding.json");
 
-async function main() {
-    const apiKey = process.env.OPENAI_API_OI
-    const model = await load(registry[models["gpt-3.5-turbo"]]);
-    const encoder = new Tiktoken(
-        model.bpe_ranks,
-        model.special_tokens,
-        model.pat_str,
-        apiKey
-    );
-    const tokens = encoder.encode("hello world");
-    encoder.free();
 
-    console.log('Número de tokens:', tokens);
-    
-}
-
-main();
 
 
 
