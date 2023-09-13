@@ -13,7 +13,7 @@ const registry = require("@dqbd/tiktoken/registry.json");
 const models = require("@dqbd/tiktoken/model_to_encoding.json");
 
 async function main() {
-    const apiKey = "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";
+    const apiKey = process.env.OPENAI_API_OI
     const model = await load(registry[models["gpt-3.5-turbo"]]);
     const encoder = new Tiktoken(
         model.bpe_ranks,
@@ -35,7 +35,7 @@ main();
 const model = new OpenAI({
     modelName: 'gpt-3.5-turbo', // Defaults to "text-davinci-003" if no model provided.
     temperature: 0.9,
-    openAIApiKey: "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", // In Node.js, defaults to process.env.OPENAI_API_KEY
+    openAIApiKey: process.env.OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
 });
 
 
@@ -69,7 +69,7 @@ function normalizeDocuments(docs) {
 //     //         VECTOR_STORE_PATH,
 //     //        await new OpenAIEmbeddings(
 //     //             {timeout: 1000,
-//     //                 openAIApiKey: "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", // In Node.js, defaults to process.env.OPENAI_API_KEY
+//     //                 openAIApiKey: process.env.OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
 //     //             }
 //     //         )
 //     //     );
