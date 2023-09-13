@@ -3,38 +3,29 @@ const User = require('../models/user');
 
 // Listar todos os produtos do banco de dados.
 exports.getAll = () => {
-   return User.find();
+  return User.find();
 };
 
-// Postar um novo produto no banco de dados.
-exports.postar = (name, email, password) => {
+// ===> Repositorio responsavel por registar um novo user (POST) localhost:3030/api/v1/register
+exports.registar = async (name, email, password) => {};
 
-    return new User({
-        name: name,
-        email: email,
-        password: password
-    }).save();
- };
+// Actualizar os dados do user no banco de dados....
+exports.update = async (id, email) => {
+ return await User.findOneAndUpdate({_id: id}, {$set: {email: email}});
+}
 
- exports.getUserByName = (name) => {
-    return User.find({ name: name })
-      .then(users => {
-        if (users.length === 0) {
-          console.log('Nenhum usuário encontrado com o nome', name);
-          return null;
-        }
-        
-        const user = users[0];
-        console.log('Usuário encontrado:');
-        console.log('- Nome:', user.name);
-        console.log('  Idade:', user.age);
-        console.log('  Email:', user.email);
-  
-        return user.name; // Retorna o nome do usuário
-      })
-      .catch(err => {
-        console.error('Erro ao consultar usuários:', err);
-        return null;
-      });
-  }
-  
+// Delete a user no DB....
+exports.delete = async (id) =>{
+  return await User.findOneAndDelete({_id: id});
+}
+
+//Login
+exports.login = async (name, password) => { 
+  return await User.findOne({ name: name });
+}
+
+//
+exports.getUserByName = async (name) => {
+  return await User.findOne({ name: name })
+}
+

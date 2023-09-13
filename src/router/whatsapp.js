@@ -70,172 +70,180 @@ mongoose.connect(process.env.MONGO_CONNECT_URI).then(() => {
 
 
 
-    client.on('message', async message => {
+    // client.on('message', async message => {
 
 
-        whatsapp_repository.getUserByName(message.from)
-            .then(async result => {
-                if (result === null) {
-                    whatsapp_repository.postar("", message.from);
-                    bot.loadDirectory("brain").then(loading_done).catch(loading_error);
-                    //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
+    //     whatsapp_repository.getUserByName(message.from)
+    //         .then(async result => {
+    //             if (result === null) {
+    //                 whatsapp_repository.postar("", message.from);
+    //                 bot.loadDirectory("brain").then(loading_done).catch(loading_error);
+    //                 //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
 
-                    function loading_done() {
-                        console.log("Bot has finished loading!");
-                        // Now the replies must be sorted!
-                        bot.sortReplies();
+    //                 function loading_done() {
+    //                     console.log("Bot has finished loading!");
+    //                     // Now the replies must be sorted!
+    //                     bot.sortReplies();
 
-                        // And now we're free to get a reply from the brain!
+    //                     // And now we're free to get a reply from the brain!
 
-                        // RiveScript remembers user data by their username and can tell
-                        // multiple users apart.
-                        let username = "local-user";
+    //                     // RiveScript remembers user data by their username and can tell
+    //                     // multiple users apart.
+    //                     let username = "local-user";
 
-                        // NOTE: the API has changed in v2.0.0 and returns a Promise now.
+    //                     // NOTE: the API has changed in v2.0.0 and returns a Promise now.
 
-                        bot.reply(username, "saudação").then(function (reply) {
-                            client.sendMessage(message.from, reply);
+    //                     bot.reply(username, "saudação").then(function (reply) {
+    //                         client.sendMessage(message.from, reply);
 
-                        });
-                    }
+    //                     });
+    //                 }
 
-                    // It's good to catch errors too!
-                    function loading_error(error, filename, lineno) {
-                        console.log("Error when loading files: " + error);
-                    }
-                }
+    //                 // It's good to catch errors too!
+    //                 function loading_error(error, filename, lineno) {
+    //                     console.log("Error when loading files: " + error);
+    //                 }
+    //             }
 
-                else {
-                    // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
-                    if (message.type === 'chat' && message.body.startsWith('/')) {
-                        // Remova o caractere '/' e converta o texto para letras minúsculas
-                        const command = message.body.slice(1).toLowerCase();
-
-
-                        // Verifique o comando recebido
-                        switch (command) {
-                            case '':
+    //             else {
+    //                 // Verifique se a mensagem é do tipo texto e se começa com o caractere '/'
+    //                 if (message.type === 'chat' && message.body.startsWith('/')) {
+    //                     // Remova o caractere '/' e converta o texto para letras minúsculas
+    //                     const command = message.body.slice(1).toLowerCase();
 
 
-                                break;
-                            case 'menu':
-                                client.sendMessage(message.from,
-                                    '===== MENU =======\n' +
-                                    '1. comandos\n' +
-                                    '2. consultar token\n' +
-                                    '3. consultar IA\n' +
-                                    '4. ajuda\n' +
-                                    '5. actualizar conta\n' +
-                                    '6. sobre\n\n' +
-                                    '7. deletar conta.\n\n' +
-                                    '==================' +
-                                    '\n* os comandos devem preceder de "/" para' +
-                                    ' serem validos.'
-                                );
-                                break;
-                            case 'ajuda':
-
-                                break;
-                            case 'image':
-                                const media = await MessageMedia.fromUrl('https://oaidalleapiprodscus.blob.core.windows.net/private/org-LAdJKVQRHP0E3Lo17Wm3TvxM/user-XNTTGVM3HH77IOlYMlCMgddj/img-Ss9k3B0BfgqVqj5fpkKWcGWA.png?st=2023-07-02T16%3A03%3A34Z&se=2023-07-02T18%3A03%3A34Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-01T20%3A28%3A55Z&ske=2023-07-02T20%3A28%3A55Z&sks=b&skv=2021-08-06&sig=J4UcK8N%2BemGXcbI2KQnAWZis%2BgkPdrWstnkjQDcZepc%3D');
-                                client.sendMessage(message.from, media);
-                                break;
-                            case 'sendimage':
-
-                                break;
-                            case 'user':
-
-                                break;
-                            case 'button':
-                                let button1 = new Buttons('Button body', [{ body: 'Aceptar' }, { body: 'rechazar' }], 'title', 'footer');
-                                client.sendMessage(message.from, button1)
-                                    .then(result => console.log("sucess with btn"))
-                                    .catch(error => console.log(error));
-                                break;
-                            default:
-                                bot.loadDirectory("brain").then(loading_done).catch(loading_error);
-                                //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
-
-                                function loading_done() {
-                                    console.log("Bot has finished loading!");
-                                    // Now the replies must be sorted!
-                                    bot.sortReplies();
-
-                                    // And now we're free to get a reply from the brain!
-
-                                    // RiveScript remembers user data by their username and can tell
-                                    // multiple users apart.
-                                    let username = "local-user";
-
-                                    // NOTE: the API has changed in v2.0.0 and returns a Promise now.
-
-                                    bot.reply(username, command).then(function (reply) {
-                                        client.sendMessage(message.from, reply);
-
-                                    });
-                                }
-
-                                // It's good to catch errors too!
-                                function loading_error(error, filename, lineno) {
-                                    console.log("Error when loading files: " + error);
-                                }
-                                break;
-                        }
-                    }
-
-                    else if (message.type === 'chat' && message.body.startsWith("*")) {
-                        // Remova o caractere '/' e converta o texto para letras minúsculas
-                        const command = message.body.slice(6).toLowerCase();
-
-                        generateImage(command).
-                            then(async result => {
-                                const media = await MessageMedia.fromUrl(result);
-                                client.sendMessage(message.from, media);
-                                //console.log(result);
-                            }).
-                            catch(error => console.log(error));
-                        // Verifique o comando recebido
-
-                    }
-                    else {
-
-                        if (message.hasMedia) {
-                            const time = new Date(message.timestamp * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1].replaceAll(':', '-')
-                            const date = new Date(message.timestamp * 1000).toISOString().substring(0, 10);
-                            const person = message['_data']['notifyName'];
-                            const phoneNumber = message.from.replaceAll('@c.us', '');
-                            const media = await message.downloadMedia();
-                            // do something with the media data here
-                            const folder = process.cwd() + '/img/' + phoneNumber + '_' + person + '/' + date + '/';
-                            const filename = folder + time + '_' + message.id.id + '.' + media.mimetype.split('/')[1];
-                            fs.mkdirSync(folder, { recursive: true });
-                            fs.writeFileSync(filename, Buffer.from(media.data, 'base64').toString('binary'), 'binary');
-                            if (media.mimetype === 'audio/ogg; codecs=opus') {
-                                console.log('AUDIO SENT: ');
-
-                            } else if (media.mimetype === 'image/jpeg') {
-                                console.log("IMAGE SENT: ");
-                            }
-                        }
-                        else {
-                            generateMeta(message.body).
-                                then(result => {
-                                    if (result === null) {
-                                        client.sendMessage(message.from, "O seu token expirou, tente mais tarde.");
-                                        console.log('resposta nula ' + result);
-                                        return;
-                                    }
-                                    client.sendMessage(message.from, result);
-                                }).
-                                catch(error => console.log(error));
-                        }
+    //                     // Verifique o comando recebido
+    //                     switch (command) {
+    //                         case '':
 
 
-                    }
-                }
-            })
-            .catch(error => console.log(error))
-    });
+    //                             break;
+    //                         case 'menu':
+    //                             client.sendMessage(message.from,
+    //                                 '===== MENU =======\n' +
+
+    //                                 '1. token\n' +
+    //                                 '2. ajuda\n' +
+    //                                 '3. actualizar conta\n' +
+    //                                 '4. sobre\n\n' +
+    //                                 '5. apagar conta.\n\n' +
+    //                                 '==================' +
+    //                                 '\n* os comandos devem preceder de "/" para' +
+    //                                 ' serem validos.'
+    //                             );
+    //                             break;
+    //                         case 'token':
+
+    //                             break;
+    //                         case 'ajuda':
+
+    //                             break;
+    //                         case 'sobre':
+
+    //                             break;
+    //                         case 'actualizar conta':
+
+    //                             break;
+    //                         case 'apagar conta':
+
+    //                             break;
+    //                         case 'image':
+    //                             const media = await MessageMedia.fromUrl('https://oaidalleapiprodscus.blob.core.windows.net/private/org-LAdJKVQRHP0E3Lo17Wm3TvxM/user-XNTTGVM3HH77IOlYMlCMgddj/img-Ss9k3B0BfgqVqj5fpkKWcGWA.png?st=2023-07-02T16%3A03%3A34Z&se=2023-07-02T18%3A03%3A34Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-01T20%3A28%3A55Z&ske=2023-07-02T20%3A28%3A55Z&sks=b&skv=2021-08-06&sig=J4UcK8N%2BemGXcbI2KQnAWZis%2BgkPdrWstnkjQDcZepc%3D');
+    //                             client.sendMessage(message.from, media);
+    //                             break;
+    //                         case 'user':
+
+    //                             break;
+    //                         case 'button':
+    //                             let button1 = new Buttons('Button body', [{ body: 'Aceptar' }, { body: 'rechazar' }], 'title', 'footer');
+    //                             client.sendMessage(message.from, button1)
+    //                                 .then(result => console.log("sucess with btn"))
+    //                                 .catch(error => console.log(error));
+    //                             break;
+    //                         default:
+    //                             bot.loadDirectory("brain").then(loading_done).catch(loading_error);
+    //                             //bot.loadFile("brain/begin.rive").then(loading_done).catch(loading_error);
+
+    //                             function loading_done() {
+    //                                 console.log("Bot has finished loading!");
+    //                                 // Now the replies must be sorted!
+    //                                 bot.sortReplies();
+
+    //                                 // And now we're free to get a reply from the brain!
+
+    //                                 // RiveScript remembers user data by their username and can tell
+    //                                 // multiple users apart.
+    //                                 let username = "local-user";
+
+    //                                 // NOTE: the API has changed in v2.0.0 and returns a Promise now.
+
+    //                                 bot.reply(username, command).then(function (reply) {
+    //                                     client.sendMessage(message.from, reply);
+
+    //                                 });
+    //                             }
+
+    //                             // It's good to catch errors too!
+    //                             function loading_error(error, filename, lineno) {
+    //                                 console.log("Error when loading files: " + error);
+    //                             }
+    //                             break;
+    //                     }
+    //                 }
+
+    //                 else if (message.type === 'chat' && message.body.startsWith("*")) {
+    //                     // Remova o caractere '/' e converta o texto para letras minúsculas
+    //                     const command = message.body.slice(6).toLowerCase();
+
+    //                     generateImage(command).
+    //                         then(async result => {
+    //                             const media = await MessageMedia.fromUrl(result);
+    //                             client.sendMessage(message.from, media);
+    //                             //console.log(result);
+    //                         }).
+    //                         catch(error => console.log(error));
+    //                     // Verifique o comando recebido
+
+    //                 }
+    //               /*  else {
+
+    //                     if (message.hasMedia) {
+    //                         const time = new Date(message.timestamp * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1].replaceAll(':', '-')
+    //                         const date = new Date(message.timestamp * 1000).toISOString().substring(0, 10);
+    //                         const person = message['_data']['notifyName'];
+    //                         const phoneNumber = message.from.replaceAll('@c.us', '');
+    //                         const media = await message.downloadMedia();
+    //                         // do something with the media data here
+    //                         const folder = process.cwd() + '/img/' + phoneNumber + '_' + person + '/' + date + '/';
+    //                         const filename = folder + time + '_' + message.id.id + '.' + media.mimetype.split('/')[1];
+    //                         fs.mkdirSync(folder, { recursive: true });
+    //                         fs.writeFileSync(filename, Buffer.from(media.data, 'base64').toString('binary'), 'binary');
+    //                         if (media.mimetype === 'audio/ogg; codecs=opus') {
+    //                             console.log('AUDIO SENT: ');
+
+    //                         } else if (media.mimetype === 'image/jpeg') {
+    //                             console.log("IMAGE SENT: ");
+    //                         }
+    //                     }
+    //                     else {
+    //                         generateMeta(message.body).
+    //                             then(result => {
+    //                                 if (result === null) {
+    //                                     client.sendMessage(message.from, "O seu token expirou, tente mais tarde.");
+    //                                     console.log('resposta nula ' + result);
+    //                                     return;
+    //                                 }
+    //                                 client.sendMessage(message.from, result);
+    //                             }).
+    //                             catch(error => console.log(error));
+    //                     }
+
+
+    //                 }*/
+    //             }
+    //         })
+    //         .catch(error => console.log(error))
+    // });
 
 });
 
