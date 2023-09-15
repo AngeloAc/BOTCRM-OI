@@ -84,7 +84,7 @@ exports.registerNewUser = (async (req, res, next) => {
         // })
 
         const token = await newUser.generateAuthToken();
-        return res.status(201).json({ message: "user created succefully!", user, token });
+        res.status(201).json({ message: "user created succefully!", user, token });
     }
     catch (err) {
         res.status(400).json({ err: err })
