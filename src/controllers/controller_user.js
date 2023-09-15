@@ -69,19 +69,19 @@ exports.registerNewUser = (async (req, res, next) => {
         const user = await newUser.save();
         console.log("i am looknik the wrong");
         // Criar nova pasta
-        // fs.mkdir(myRoot() + '/' + user._id.toString(), (err) => {
-        //     if (err) {
-        //         console.error(`Erro ao criar a pasta: ${err.message}`);
-        //         return;
-        //     } else {
-        //         fs.writeFile(myRoot() + '/' + user._id.toString() + '/file.txt', 'Tu es um bot da startup startic.', 'utf8', (err) => {
-        //             if (err) {
-        //                 console.error(`Erro ao escrever o arquivo: ${err.message}`);
-        //                 return;
-        //             }
-        //         });
-        //     }
-        // })
+        fs.mkdir(myRoot() + '/' + user._id.toString(), (err) => {
+            if (err) {
+                console.error(`Erro ao criar a pasta: ${err.message}`);
+                return;
+            } else {
+                fs.writeFile(myRoot() + '/' + user._id.toString() + '/file.txt', 'Tu es um bot da startup startic.', 'utf8', (err) => {
+                    if (err) {
+                        console.error(`Erro ao escrever o arquivo: ${err.message}`);
+                        return;
+                    }
+                });
+            }
+        })
 
         const token = await newUser.generateAuthToken();
         res.status(201).json({ message: "user created succefully!", user, token });
