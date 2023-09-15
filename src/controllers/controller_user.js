@@ -65,9 +65,9 @@ exports.registerNewUser = (async (req, res, next) => {
                 { app: 'whatsapp' }
             ]
         });
-
+        console.log(portaAleatoria);
         const user = await newUser.save();
-
+        console.log("i am looknik the wrong");
         // Criar nova pasta
         // fs.mkdir(myRoot() + '/' + user._id.toString(), (err) => {
         //     if (err) {
