@@ -87,7 +87,7 @@ exports.registerNewUser = (async (req, res, next) => {
         res.status(201).json({ message: "user created succefully!", user, token });
     }
     catch (err) {
-        res.status(400).json({ err: err })
+        res.status(400).json({ err: "error ao enviar o response:  " + err })
     }
 });
 // ====> FIM CONTROLLER REGISTER...
