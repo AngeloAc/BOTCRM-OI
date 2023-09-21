@@ -9,7 +9,8 @@ const fs = require('fs');
 const { exec, spawn } = require('child_process');
 const path = require('path');
 const { stdout, stderr } = require('process');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { generateImage } = require('../../bin/controller');
 
 myRoot = (() => {
     const parent = path.resolve(__dirname, '..');
@@ -41,7 +42,7 @@ exports.registerNewUser = (async (req, res, next) => {
         }
 
         const usedPorts = [];
-        const minPorta = 1024;
+        const minPorta = 3038;
         const maxPorta = 49151;
 
         let userPorta = await User.find();
@@ -65,9 +66,9 @@ exports.registerNewUser = (async (req, res, next) => {
                 { app: 'whatsapp' }
             ]
         });
-        console.log(portaAleatoria);
+        
         const user = await newUser.save();
-        console.log("i am looknik the wrong");
+        
         // Criar nova pasta
         fs.mkdir(myRoot() + '/' + user._id.toString(), (err) => {
             if (err) {
@@ -274,15 +275,26 @@ exports.promptChat = (async (req, res, next) => {
             if (element === req.params.message_id) {
                 user.conversations[index].messages = user.conversations[index].messages.concat(req.body);
                 const question = req.body[0].text;
-                console.log('pergunta: ' + question);
-                await chat.generateData(question)
-                    .then(async result => {
-                        user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });                    // await user.save();
-                        await user.save();
-                        return res.status(200).json({
-                            resposta: result
-                        })
-                    })
+               // Verifica se a pergunta começa com "Image" ou "image"
+        if (question.toLowerCase().startsWith('image')) {
+            // Execute a função generateImage
+            const r = await generateImage(question)
+            // console.log(r)
+            user.conversations[index].messages = user.conversations[index].messages.concat({ text: r, isUser: false });
+            await user.save();
+            return res.status(200).json({
+                resposta: r
+            });
+        } else {
+            // Execute chat.generateData
+            const result = await chat.generateData(question);
+            user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });
+            await user.save();
+            return res.status(200).json({
+                resposta: result
+            });
+        }
+                
             }
         }
 

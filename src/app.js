@@ -12,16 +12,13 @@ const user = require('./router/user');
 // conexao com banco de dado...
 // mongo.connect(process.env.MONGO_CONNECT_URI).
 mongo.connect(process.env.MONGO_CONNECT_URI).
-    then(() => console.log("Connected to db")).catch(error => console.log("Ocorreu um erro ao criar o banco de dados!" + error.message));
+    then(() => console.log("> A sua frontend está agora conectado ao seu banco de dados.")).catch(error => console.log("> Ocorreu um erro ao criar o banco de dados!" + error.message));
 
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
 app.use(cors({
     origin: '*',
 }))
 app.use(body_parser.json());
-app.use(body_parser.urlencoded({ extended: false }))
+app.use(body_parser.urlencoded({ extended: false }));
 
 app.use('/', index);
 app.use('/user', user);
