@@ -510,7 +510,7 @@ exports.whatsappWeb_install = (async (req, res, next) => {
                 console.log(`Acessou a pasta "${nomeNovaPasta}"`);
 
                 // Clonar o código do repositório
-                exec(`git clone ${urlRepositorio}`, (err, stdout, stderr) => {
+                exec(`git clone ${urlRepositorio}`, async (err, stdout, stderr) => {
                     if (err) {
                         console.error(`Erro ao clonar o repositório: ${err.message}`);
                         return;
@@ -525,13 +525,13 @@ exports.whatsappWeb_install = (async (req, res, next) => {
 
 
                     // Executar "npm install"
-                    exec('npm install', async (err, stdout, stderr) => {
-                        console.log('Installing npm')
-                        if (err) {
-                            console.error(`Erro ao executar "npm install": ${err.message}`);
-                            return;
-                        }
-                        console.log('Comando "npm install" executado com sucesso!');
+                    // exec('npm install', async (err, stdout, stderr) => {
+                        // console.log('Installing npm')
+                        // if (err) {
+                        //     console.error(`Erro ao executar "npm install": ${err.message}`);
+                        //     return;
+                        // }
+                        // console.log('Comando "npm install" executado com sucesso!');
 
                         //     //--------
                         await fs.readFile(nomeArquivo, 'utf8', (err, data) => {
@@ -639,7 +639,7 @@ exports.whatsappWeb_install = (async (req, res, next) => {
                         user.addons = addons;
                         user.save();
                         return res.status(200).json(addons)
-                    });
+                    // });
                 });
             }
         })
