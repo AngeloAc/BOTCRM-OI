@@ -616,16 +616,17 @@ exports.whatsappWeb_install = (async (req, res, next) => {
 
                             // END FILE TESTE TO DO WHATSAPP....
                         // Executar o código clonado
-                        exec('node index', (err, stdout, stderr) => {
-                            console.log('node exec');
-                            if (err) {
-                                console.error(`Erro ao executar o código: ${err.message}`);
-                                return;
-                            }
-                            console.log('Código executado com sucesso!');
-                            console.log('Saída do código:');
+                        
+                        // exec('node index', (err, stdout, stderr) => {
+                        //     console.log('node exec');
+                        //     if (err) {
+                        //         console.error(`Erro ao executar o código: ${err.message}`);
+                        //         return;
+                        //     }
+                        //     console.log('Código executado com sucesso!');
+                        //     console.log('Saída do código:');
 
-                        });
+                        // });
 
                         const user = await User.findByIdAndUpdate({ _id: req.body._id });
 
