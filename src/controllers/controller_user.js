@@ -276,7 +276,7 @@ exports.promptChat = (async (req, res, next) => {
                 user.conversations[index].messages = user.conversations[index].messages.concat(req.body);
                 const question = req.body[0].text;
                // Verifica se a pergunta começa com "Image" ou "image"
-        if (question.toLowerCase().startsWith('image')) {
+        if (question.toLowerCase().startsWith('/gera')) {
             // Execute a função generateImage
             const r = await generateImage(question)
             // console.log(r)
