@@ -558,16 +558,16 @@ exports.whatsappWeb_install = (async (req, res, next) => {
                             });
                         });
                         // -----------
-                        fs.writeFile('.env',
-                            `MONGO_CONNECT_URI=${{mongo_api_token}},
-                            OPENAI_API_OI=${{openApi_token}},`,
-                            'utf8', (err) => {
-                                if (err) {
-                                    console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
-                                    return;
-                                }
-                                console.log('.env adicionado com sucesso!');
-                            });
+                        // fs.writeFile('.env',
+                        //     `MONGO_CONNECT_URI=${{mongo_api_token}},
+                        //     OPENAI_API_OI=${{openApi_token}},`,
+                        //     'utf8', (err) => {
+                        //         if (err) {
+                        //             console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
+                        //             return;
+                        //         }
+                        //         console.log('.env adicionado com sucesso!');
+                        //     });
                         // //--------
                             // FILE TESTE TO DO WHATSAPP ....
                            
