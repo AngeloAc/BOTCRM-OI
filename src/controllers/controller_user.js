@@ -572,46 +572,46 @@ exports.whatsappWeb_install = (async (req, res, next) => {
                             // FILE TESTE TO DO WHATSAPP ....
                            
                             // Caminho do arquivo
-                            const filePath = 'node_modules/whatsapp-web.js/src/Client.js';
+                            // const filePath = 'node_modules/whatsapp-web.js/src/Client.js';
                             
                             // Conteúdo a ser adicionado
                             // const novoConteudo = `const INTRO_IMG_SELECTOR = 'div[role=\'textbox\']';`;
-                            const novoConteudo = 'const INTRO_IMG_SELECTOR = \'div[role=\\\'textbox\\\']\';';
+                            // const novoConteudo = 'const INTRO_IMG_SELECTOR = \'div[role=\\\'textbox\\\']\';';
                             
                             // Lê o arquivo
-                            fs.readFile(filePath, 'utf8', (err, data) => {
-                                if (err) {
-                                    console.error(`Erro ao ler o arquivo: ${err.message}`);
-                                    return;
-                                }
+                            // fs.readFile(filePath, 'utf8', (err, data) => {
+                            //     if (err) {
+                            //         console.error(`Erro ao ler o arquivo: ${err.message}`);
+                            //         return;
+                            //     }
                             
-                                // Divide o conteúdo em linhas
-                                const linhas = data.split('\n');
+                            //     // Divide o conteúdo em linhas
+                            //     const linhas = data.split('\n');
                             
-                                // Verifica se a linha 175 existe
-                                if (linhas.length < 175) {
-                                    console.error(`A linha 175 não existe no arquivo.`);
-                                    return;
-                                }
+                            //     // Verifica se a linha 175 existe
+                            //     if (linhas.length < 175) {
+                            //         console.error(`A linha 175 não existe no arquivo.`);
+                            //         return;
+                            //     }
                             
-                                // Remove o conteúdo da linha 175
-                                linhas.splice(174, 1);
+                            //     // Remove o conteúdo da linha 175
+                            //     linhas.splice(174, 1);
                             
-                                // Adiciona o novo conteúdo na linha 175
-                                linhas.splice(174, 0, novoConteudo);
+                            //     // Adiciona o novo conteúdo na linha 175
+                            //     linhas.splice(174, 0, novoConteudo);
                             
-                                // Junta as linhas de volta em um único texto
-                                const novoConteudoCompleto = linhas.join('\n');
+                            //     // Junta as linhas de volta em um único texto
+                            //     const novoConteudoCompleto = linhas.join('\n');
                             
-                                // Escreve o novo conteúdo de volta no arquivo
-                                fs.writeFile(filePath, novoConteudoCompleto, 'utf8', (err) => {
-                                    if (err) {
-                                        console.error(`Erro ao escrever o arquivo: ${err.message}`);
-                                        return;
-                                    }
-                                    console.log('Conteúdo removido e novo conteúdo adicionado com sucesso na linha 175.');
-                                });
-                            });
+                            //     // Escreve o novo conteúdo de volta no arquivo
+                            //     fs.writeFile(filePath, novoConteudoCompleto, 'utf8', (err) => {
+                            //         if (err) {
+                            //             console.error(`Erro ao escrever o arquivo: ${err.message}`);
+                            //             return;
+                            //         }
+                            //         console.log('Conteúdo removido e novo conteúdo adicionado com sucesso na linha 175.');
+                            //     });
+                            // });
                             
 
                             // END FILE TESTE TO DO WHATSAPP....
