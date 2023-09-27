@@ -9,7 +9,7 @@ const fs = require('fs');
 const { exec, spawn } = require('child_process');
 const path = require('path');
 const { stdout, stderr } = require('process');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { generateImage } = require('../../bin/controller');
 
 myRoot = (() => {
