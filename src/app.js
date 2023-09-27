@@ -7,7 +7,7 @@ const dotenv = require('dotenv').config();
 const index = require('./router/index');
 const user = require('./router/user');
 //const whatsapp = require('./router/whatsapp');
-//const dashboard = require('./router/dashbord');
+//const dashboard = require('./router/dashbord'); comment
 
 // conexao com banco de dado...
 // mongo.connect(process.env.MONGO_CONNECT_URI).
