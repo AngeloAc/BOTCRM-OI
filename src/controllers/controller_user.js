@@ -289,9 +289,25 @@ exports.promptChat = (async (req, res, next) => {
                     // Execute chat.generateData
                     const result = await chat.generateData(question);
                     user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });
-                    const time = new Date(message.timestamp * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1].replaceAll(':', '-')
-                    const date = new Date(message.timestamp * 1000).toISOString().substring(0, 10);
-                    console.log(time + " and  "+ date);
+                    const dataAtual = new Date();
+
+                    // Obtém os componentes da data
+                    const dia = dataAtual.getDate();
+                    const mes = dataAtual.getMonth() + 1; // Os meses começam em 0
+                    const ano = dataAtual.getFullYear();
+                    
+                    // Obtém os componentes da hora
+                    const horas = dataAtual.getHours();
+                    const minutos = dataAtual.getMinutes();
+                    const segundos = dataAtual.getSeconds();
+                    
+                    // Formata a data e hora
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+                    const horaFormatada = `${horas}:${minutos}:${segundos}`;
+                    
+                    // Imprime na console
+                    console.log(`Data: ${dataFormatada}`);
+                    console.log(`Hora: ${horaFormatada}`);
                     await user.save();
                     return res.status(200).json({
                         resposta: result
