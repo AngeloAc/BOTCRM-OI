@@ -24,6 +24,8 @@ const schema = new Schema({
     language: { type: String, default: 'Portugues' },
     telefone: { type: Number, default: null },
     plano: { type: String, default: 'Free' },
+    saldo: { type: String, default: '0 kz' },
+    expire: {type: String, default: '01 de Dezembro 2023'},
     porta: {
         type: String,
     },
