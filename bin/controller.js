@@ -5,12 +5,12 @@ const { OpenAI } = require('langchain/llms/openai');
 
 
 
-const OPENAI_API_OI = "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"
+
 
 const model = new OpenAI({
     modelName: 'gpt-3.5-turbo', // Defaults to "text-davinci-003" if no model provided.
     temperature: 0.9,
-    openAIApiKey: OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
+    openAIApiKey: process.env.OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
 });
 
 
