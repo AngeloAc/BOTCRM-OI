@@ -66,9 +66,9 @@ exports.registerNewUser = (async (req, res, next) => {
                 { app: 'whatsapp' }
             ]
         });
-        
+
         const user = await newUser.save();
-        
+
         // Criar nova pasta
         fs.mkdir(myRoot() + '/' + user._id.toString(), (err) => {
             if (err) {
@@ -275,26 +275,29 @@ exports.promptChat = (async (req, res, next) => {
             if (element === req.params.message_id) {
                 user.conversations[index].messages = user.conversations[index].messages.concat(req.body);
                 const question = req.body[0].text;
-               // Verifica se a pergunta começa com "Image" ou "image"
-        if (question.toLowerCase().startsWith('/gera')) {
-            // Execute a função generateImage
-            const r = await generateImage(question)
-            // console.log(r)
-            user.conversations[index].messages = user.conversations[index].messages.concat({ text: r, isUser: false });
-            await user.save();
-            return res.status(200).json({
-                resposta: r
-            });
-        } else {
-            // Execute chat.generateData
-            const result = await chat.generateData(question);
-            user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });
-            await user.save();
-            return res.status(200).json({
-                resposta: result
-            });
-        }
-                
+                // Verifica se a pergunta começa com "Image" ou "image"
+                if (question.toLowerCase().startsWith('/gera')) {
+                    // Execute a função generateImage
+                    const r = await generateImage(question)
+                    // console.log(r)
+                    user.conversations[index].messages = user.conversations[index].messages.concat({ text: r, isUser: false });
+                    await user.save();
+                    return res.status(200).json({
+                        resposta: r
+                    });
+                } else {
+                    // Execute chat.generateData
+                    const result = await chat.generateData(question);
+                    user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });
+                    const time = new Date(message.timestamp * 1000).toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1].replaceAll(':', '-')
+                    const date = new Date(message.timestamp * 1000).toISOString().substring(0, 10);
+                    console.log(time + " and  "+ date);
+                    await user.save();
+                    return res.status(200).json({
+                        resposta: result
+                    });
+                }
+
             }
         }
 
@@ -310,7 +313,7 @@ exports.promptChat = (async (req, res, next) => {
 exports.codeJava = (async (req, res, next) => {
     try {
 
-        
+
         const chat = new CustomAI();
         req.body.pop();
         req.body.splice(0, req.body.length - 1);
@@ -319,21 +322,21 @@ exports.codeJava = (async (req, res, next) => {
         console.log(req.params.message_id)
         for (let index = 0; index < user.code.length; index++) {
             const element = user.code[index]._id.toString();
-            
+
             if (element === req.params.message_id) {
                 user.code[index].messages = user.code[index].messages.concat(req.body);
                 const question = req.body[0].text;
                 let promptInit = `Faça o código em ${user.code[index].code}, unicamente em ${user.code[index].code}. Por favor, inclua comentários e comece sempre o código com \`\`\`${user.code[index].code}. Obedeça aos seguintes detalhes: `;
-                if(user.code[index].code === 'javascript'){
+                if (user.code[index].code === 'javascript') {
                     promptInit = `Faça o código em javascript para P5.js, unicamente em javascript para P5.js. Por favor, inclua comentários e comece sempre o código com \`\`\`javascript. Obedeça aos seguintes detalhes: `;
                     console.log('running p5js')
                 }
-                else if(user.code[index].code === 'c'){
+                else if (user.code[index].code === 'c') {
                     promptInit = `Faça o código em usando a linguagem C para o microcontolador arduino, unicamente em usando a linguaguem C para arduino. Por favor, inclua comentários e comece sempre o código com \`\`\`c. Obedeça aos seguintes detalhes: `;
                     console.log('running p5js')
                 }
                 else {
-                     promptInit = `Faça o código em ${user.code[index].code}, unicamente em ${user.code[index].code}. Por favor, inclua comentários e comece sempre o código com \`\`\`${user.code[index].code}. Obedeça aos seguintes detalhes: `;
+                    promptInit = `Faça o código em ${user.code[index].code}, unicamente em ${user.code[index].code}. Por favor, inclua comentários e comece sempre o código com \`\`\`${user.code[index].code}. Obedeça aos seguintes detalhes: `;
                 }
                 console.log(user.code[index].code);
                 console.log(promptInit + question);
@@ -526,119 +529,119 @@ exports.whatsappWeb_install = (async (req, res, next) => {
 
                     // Executar "npm install"
                     // exec('npm install', async (err, stdout, stderr) => {
-                        // console.log('Installing npm')
-                        // if (err) {
-                        //     console.error(`Erro ao executar "npm install": ${err.message}`);
-                        //     return;
-                        // }
-                        // console.log('Comando "npm install" executado com sucesso!');
+                    // console.log('Installing npm')
+                    // if (err) {
+                    //     console.error(`Erro ao executar "npm install": ${err.message}`);
+                    //     return;
+                    // }
+                    // console.log('Comando "npm install" executado com sucesso!');
 
-                        //     //--------
-                        await fs.readFile(nomeArquivo, 'utf8', (err, data) => {
+                    //     //--------
+                    await fs.readFile(nomeArquivo, 'utf8', (err, data) => {
+                        if (err) {
+                            console.error(`Erro ao ler o arquivo "${nomeArquivo}": ${err.message}`);
+                            return;
+                        }
+
+                        const linhas = data.split('\n');
+                        if (linhaEspecifica > linhas.length) {
+                            console.error(`A linha específica não existe no arquivo "${nomeArquivo}".`);
+                            return;
+                        }
+
+                        linhas.splice(linhaEspecifica - 1, 0, novoParagrafo);
+                        const novoConteudo = linhas.join('\n');
+
+                        fs.writeFile(nomeArquivo, novoConteudo, 'utf8', (err) => {
                             if (err) {
-                                console.error(`Erro ao ler o arquivo "${nomeArquivo}": ${err.message}`);
+                                console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
                                 return;
                             }
-
-                            const linhas = data.split('\n');
-                            if (linhaEspecifica > linhas.length) {
-                                console.error(`A linha específica não existe no arquivo "${nomeArquivo}".`);
-                                return;
-                            }
-
-                            linhas.splice(linhaEspecifica - 1, 0, novoParagrafo);
-                            const novoConteudo = linhas.join('\n');
-
-                            fs.writeFile(nomeArquivo, novoConteudo, 'utf8', (err) => {
-                                if (err) {
-                                    console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
-                                    return;
-                                }
-                                console.log('Parágrafo adicionado com sucesso na linha específica!');
-                            });
+                            console.log('Parágrafo adicionado com sucesso na linha específica!');
                         });
-                        // -----------
-                        // fs.writeFile('.env',
-                        //     `MONGO_CONNECT_URI=${{mongo_api_token}},
-                        //     OPENAI_API_OI=${{openApi_token}},`,
-                        //     'utf8', (err) => {
-                        //         if (err) {
-                        //             console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
-                        //             return;
-                        //         }
-                        //         console.log('.env adicionado com sucesso!');
-                        //     });
-                        // //--------
-                            // FILE TESTE TO DO WHATSAPP ....
-                           
-                            // Caminho do arquivo
-                            // const filePath = 'node_modules/whatsapp-web.js/src/Client.js';
-                            
-                            // Conteúdo a ser adicionado
-                            // const novoConteudo = `const INTRO_IMG_SELECTOR = 'div[role=\'textbox\']';`;
-                            // const novoConteudo = 'const INTRO_IMG_SELECTOR = \'div[role=\\\'textbox\\\']\';';
-                            
-                            // Lê o arquivo
-                            // fs.readFile(filePath, 'utf8', (err, data) => {
-                            //     if (err) {
-                            //         console.error(`Erro ao ler o arquivo: ${err.message}`);
-                            //         return;
-                            //     }
-                            
-                            //     // Divide o conteúdo em linhas
-                            //     const linhas = data.split('\n');
-                            
-                            //     // Verifica se a linha 175 existe
-                            //     if (linhas.length < 175) {
-                            //         console.error(`A linha 175 não existe no arquivo.`);
-                            //         return;
-                            //     }
-                            
-                            //     // Remove o conteúdo da linha 175
-                            //     linhas.splice(174, 1);
-                            
-                            //     // Adiciona o novo conteúdo na linha 175
-                            //     linhas.splice(174, 0, novoConteudo);
-                            
-                            //     // Junta as linhas de volta em um único texto
-                            //     const novoConteudoCompleto = linhas.join('\n');
-                            
-                            //     // Escreve o novo conteúdo de volta no arquivo
-                            //     fs.writeFile(filePath, novoConteudoCompleto, 'utf8', (err) => {
-                            //         if (err) {
-                            //             console.error(`Erro ao escrever o arquivo: ${err.message}`);
-                            //             return;
-                            //         }
-                            //         console.log('Conteúdo removido e novo conteúdo adicionado com sucesso na linha 175.');
-                            //     });
-                            // });
-                            
+                    });
+                    // -----------
+                    // fs.writeFile('.env',
+                    //     `MONGO_CONNECT_URI=${{mongo_api_token}},
+                    //     OPENAI_API_OI=${{openApi_token}},`,
+                    //     'utf8', (err) => {
+                    //         if (err) {
+                    //             console.error(`Erro ao escrever o arquivo "${nomeArquivo}": ${err.message}`);
+                    //             return;
+                    //         }
+                    //         console.log('.env adicionado com sucesso!');
+                    //     });
+                    // //--------
+                    // FILE TESTE TO DO WHATSAPP ....
 
-                            // END FILE TESTE TO DO WHATSAPP....
-                        // Executar o código clonado
-                        
-                        // exec('node index', (err, stdout, stderr) => {
-                        //     console.log('node exec');
-                        //     if (err) {
-                        //         console.error(`Erro ao executar o código: ${err.message}`);
-                        //         return;
-                        //     }
-                        //     console.log('Código executado com sucesso!');
-                        //     console.log('Saída do código:');
+                    // Caminho do arquivo
+                    // const filePath = 'node_modules/whatsapp-web.js/src/Client.js';
 
-                        // });
+                    // Conteúdo a ser adicionado
+                    // const novoConteudo = `const INTRO_IMG_SELECTOR = 'div[role=\'textbox\']';`;
+                    // const novoConteudo = 'const INTRO_IMG_SELECTOR = \'div[role=\\\'textbox\\\']\';';
 
-                        const user = await User.findByIdAndUpdate({ _id: req.body._id });
+                    // Lê o arquivo
+                    // fs.readFile(filePath, 'utf8', (err, data) => {
+                    //     if (err) {
+                    //         console.error(`Erro ao ler o arquivo: ${err.message}`);
+                    //         return;
+                    //     }
 
-                        const addons = {
-                            app: 'whatsapp',
-                            installed: true,
-                            model: 'business',
-                            status: "connect",
-                        };
-                        user.addons = addons;
-                        user.save();
-                        return res.status(200).json(addons)
+                    //     // Divide o conteúdo em linhas
+                    //     const linhas = data.split('\n');
+
+                    //     // Verifica se a linha 175 existe
+                    //     if (linhas.length < 175) {
+                    //         console.error(`A linha 175 não existe no arquivo.`);
+                    //         return;
+                    //     }
+
+                    //     // Remove o conteúdo da linha 175
+                    //     linhas.splice(174, 1);
+
+                    //     // Adiciona o novo conteúdo na linha 175
+                    //     linhas.splice(174, 0, novoConteudo);
+
+                    //     // Junta as linhas de volta em um único texto
+                    //     const novoConteudoCompleto = linhas.join('\n');
+
+                    //     // Escreve o novo conteúdo de volta no arquivo
+                    //     fs.writeFile(filePath, novoConteudoCompleto, 'utf8', (err) => {
+                    //         if (err) {
+                    //             console.error(`Erro ao escrever o arquivo: ${err.message}`);
+                    //             return;
+                    //         }
+                    //         console.log('Conteúdo removido e novo conteúdo adicionado com sucesso na linha 175.');
+                    //     });
+                    // });
+
+
+                    // END FILE TESTE TO DO WHATSAPP....
+                    // Executar o código clonado
+
+                    // exec('node index', (err, stdout, stderr) => {
+                    //     console.log('node exec');
+                    //     if (err) {
+                    //         console.error(`Erro ao executar o código: ${err.message}`);
+                    //         return;
+                    //     }
+                    //     console.log('Código executado com sucesso!');
+                    //     console.log('Saída do código:');
+
+                    // });
+
+                    const user = await User.findByIdAndUpdate({ _id: req.body._id });
+
+                    const addons = {
+                        app: 'whatsapp',
+                        installed: true,
+                        model: 'business',
+                        status: "connect",
+                    };
+                    user.addons = addons;
+                    user.save();
+                    return res.status(200).json(addons)
                     // });
                 });
             }
