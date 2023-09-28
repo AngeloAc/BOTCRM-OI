@@ -107,6 +107,8 @@ schema.methods.generateAuthToken = async function(){
             countryCode: user.countryCode,
             telefone: user.telefone,
             plano: user.plano,
+            saldo: user.saldo,
+            expire: user.expire,
             language: user.language,
             codeStatus: user.codeStatus
         }, 
