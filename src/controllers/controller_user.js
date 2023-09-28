@@ -271,7 +271,7 @@ exports.promptChat = (async (req, res, next) => {
         const user = await User.findById({ _id: req.params.id });
         for (let index = 0; index < user.conversations.length; index++) {
             const element = user.conversations[index]._id.toString();
-            console.log(element)
+            
             if (element === req.params.message_id) {
                 user.conversations[index].messages = user.conversations[index].messages.concat(req.body);
                 const question = req.body[0].text;
@@ -288,7 +288,6 @@ exports.promptChat = (async (req, res, next) => {
                 } else {
                     // Execute chat.generateData
                     const result = await chat.generateData(question);
-                    user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false });
                     const dataAtual = new Date();
 
                     // Obtém os componentes da data
@@ -306,8 +305,8 @@ exports.promptChat = (async (req, res, next) => {
                     const horaFormatada = `${horas}:${minutos}:${segundos}`;
                     
                     // Imprime na console
-                    console.log(`Data: ${dataFormatada}`);
-                    console.log(`Hora: ${horaFormatada}`);
+                    user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false, time: horaFormatada, data: dataFormatada });
+
                     await user.save();
                     return res.status(200).json({
                         resposta: result
