@@ -5,12 +5,12 @@ const { OpenAI } = require('langchain/llms/openai');
 
 
 
-
+const OPENAI_API_OI = "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"
 
 const model = new OpenAI({
     modelName: 'gpt-3.5-turbo', // Defaults to "text-davinci-003" if no model provided.
     temperature: 0.9,
-    openAIApiKey: process.env.OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
+    openAIApiKey: OPENAI_API_OI, // In Node.js, defaults to process.env.OPENAI_API_KEY
 });
 
 
@@ -56,7 +56,7 @@ function normalizeDocuments(docs) {
 // main().catch((error) => {
 //     console.error(error);
 // });
- 
+
 
 
 const generateMeta = async (title) => {
@@ -93,6 +93,22 @@ const generateImage = async (desc) => {
     return image.data.data[0].url;
 }
 
+
+const variationImage = async () => {
+    const image = await openai.createImageVariation(
+        fs.createReadStream("1.jpg"),
+        1,
+        
+    );
+
+    return image.data.data[0].url;
+}
+
+const editImage = async () => {
+    
+}
+
+
 const audioTotext = async (data) => {
     const transcript = await openai.createTranscription(
         fs.createReadStream('audio.mp3'),
@@ -102,4 +118,4 @@ const audioTotext = async (data) => {
     console.log(transcript.data.text);
 }
 
-module.exports = { generateMeta, generateImage, audioTotext };
+module.exports = { generateMeta, generateImage, audioTotext, variationImage, editImage };

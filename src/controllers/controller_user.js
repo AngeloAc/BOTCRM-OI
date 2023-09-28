@@ -719,3 +719,8 @@ exports.whatsappWeb_addonsUpadate = (async (req, res, next) => {
         })
     }
 });
+
+exports.uploadImageVariation = (async (req, res, next) => {
+
+    console.log("i am in upload");
+});

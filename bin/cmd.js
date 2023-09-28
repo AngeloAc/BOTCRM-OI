@@ -150,4 +150,13 @@
 // console.log(extracted.outsideJava);
 
 
-  
+  const { variationImage, generateImage }  = require('./controller');
+
+const image = async () =>{
+   const i = await variationImage();
+   console.log(i);
+}
+
+image()
+
+// editImage();

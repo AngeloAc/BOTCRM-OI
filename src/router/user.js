@@ -66,5 +66,9 @@ router.post('/app/whatsapp/web/install', controller.whatsappWeb_install);
 
 // ======>
 router.post('/app/whatsapp/web/addons/:id', controller.whatsappWeb_addonsUpadate);
+
+// ======>
+router.post('/uploadvariation', controller.uploadImageVariation);
+
 module.exports = router;
 
