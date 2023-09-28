@@ -298,11 +298,11 @@ exports.promptChat = (async (req, res, next) => {
                     // Obtém os componentes da hora
                     const horas = dataAtual.getHours();
                     const minutos = dataAtual.getMinutes();
-                    const segundos = dataAtual.getSeconds();
+                    // const segundos = dataAtual.getSeconds();
                     
                     // Formata a data e hora
                     const dataFormatada = `${dia}/${mes}/${ano}`;
-                    const horaFormatada = `${horas}:${minutos}:${segundos}`;
+                    const horaFormatada = `${horas}:${minutos}`;
                     
                     // Imprime na console
                     user.conversations[index].messages = user.conversations[index].messages.concat({ text: result, isUser: false, time: horaFormatada, data: dataFormatada });
