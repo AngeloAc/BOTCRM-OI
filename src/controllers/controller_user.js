@@ -11,7 +11,7 @@ const path = require('path');
 const { stdout, stderr } = require('process');
 const bcrypt = require('bcryptjs');
 const { generateImage, variationImage } = require('../../bin/controller');
-const sharp = require('sharp');
+
 
 
 myRoot = (() => {
