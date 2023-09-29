@@ -10,7 +10,9 @@ const { exec, spawn } = require('child_process');
 const path = require('path');
 const { stdout, stderr } = require('process');
 const bcrypt = require('bcryptjs');
-const { generateImage } = require('../../bin/controller');
+const { generateImage, variationImage } = require('../../bin/controller');
+const sharp = require('sharp');
+
 
 myRoot = (() => {
     const parent = path.resolve(__dirname, '..');
@@ -280,7 +282,26 @@ exports.promptChat = (async (req, res, next) => {
                     // Execute a função generateImage
                     const r = await generateImage(question)
                     // console.log(r)
-                    user.conversations[index].messages = user.conversations[index].messages.concat({ text: r, isUser: false });
+                    
+                    const dataAtual = new Date();
+
+                    // Obtém os componentes da data
+                    const dia = dataAtual.getDate();
+                    const mes = dataAtual.getMonth() + 1; // Os meses começam em 0
+                    const ano = dataAtual.getFullYear();
+                    
+                    // Obtém os componentes da hora
+                    const horas = dataAtual.getHours();
+                    const minutos = dataAtual.getMinutes();
+                    // const segundos = dataAtual.getSeconds();
+                    
+                    // Formata a data e hora
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+                    const horaFormatada = `${horas}:${minutos}`;
+                    
+                    // Imprime na console
+                     user.conversations[index].messages = user.conversations[index].messages.concat({ text: r, isUser: false, time: horaFormatada, data: dataFormatada });
+
                     await user.save();
                     return res.status(200).json({
                         resposta: r
@@ -720,7 +741,56 @@ exports.whatsappWeb_addonsUpadate = (async (req, res, next) => {
     }
 });
 
+
 exports.uploadImageVariation = (async (req, res, next) => {
 
-    console.log("i am in upload");
+    try {
+        if (!req.file) {
+            return res.status(400).send('Nenhum arquivo foi enviado.');
+          }
+     
+         const i = await variationImage(req.file.path);
+       
+        return res.status(200).json({
+            image: i
+        })
+    } catch (error) {
+        
+        return res.status(400).json(error);
+    }
+   
 });
+
+
+exports.deleteConversation = (async (req, res, next) => {
+    try {
+        
+        const userId = req.params.id;
+        const user = await User.findOne({ _id: userId });
+        const conversationID = req.body.conversationID
+        // Encontrar o índice da conversa que você deseja deletar
+        const conversationIndex = user.conversations.findIndex((conversation) => {
+            return conversation._id.toString() === conversationID; // Supondo que você tenha o ID da conversa que deseja deletar no corpo da requisição
+        });
+    
+        // Verificar se a conversa foi encontrada
+        if (conversationIndex !== -1) {
+            // Remover a conversa do array
+            user.conversations.splice(conversationIndex, 1);
+    
+            // Salvar as alterações no banco de dados
+            await user.save();
+    
+            // console.log(`Conversa com ID foi deletada com sucesso.`);
+            return res.status(200).json({ message: "Conversa deletada com sucesso." });
+        } else {
+            // console.log(`Conversa com ID não encontrada.`);
+            return res.status(404).json({ message: "Conversa não encontrada." });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao deletar a conversa." });
+    }
+    
+});
+

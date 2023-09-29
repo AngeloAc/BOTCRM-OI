@@ -94,9 +94,9 @@ const generateImage = async (desc) => {
 }
 
 
-const variationImage = async () => {
+const variationImage = async (imagePath) => {
     const image = await openai.createImageVariation(
-        fs.createReadStream("1.jpg"),
+        fs.createReadStream(imagePath),
         1,
         
     );

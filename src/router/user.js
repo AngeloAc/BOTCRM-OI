@@ -1,7 +1,23 @@
-const express = require('express')
+const express = require('express');
+const path = require('path')
 const router = express.Router();
-const controller = require ('../controllers/controller_user');
+const controller = require('../controllers/controller_user');
 const midleware = require('./auth/midleware');
+const multer = require('multer');
+
+// Configuração do Multer para o upload de arquivos
+const storage = multer.diskStorage({
+    destination: 'uploads/', // Pasta onde os arquivos serão salvos
+    limits: { fileSize: 4 * 1024 * 1024 }, // Limitar o tamanho do arquivo para 4 MB
+    filename: (req, file, cb) => {
+        const extname = path.extname(file.originalname);
+        cb(null, Date.now() + extname); // Nome do arquivo será o timestamp atual + extensão
+    },
+});
+
+const upload = multer({ storage });
+
+
 
 
 // ===> Rota responsavel por registar um novo user (POST)
@@ -68,7 +84,9 @@ router.post('/app/whatsapp/web/install', controller.whatsappWeb_install);
 router.post('/app/whatsapp/web/addons/:id', controller.whatsappWeb_addonsUpadate);
 
 // ======>
-router.post('/uploadvariation', controller.uploadImageVariation);
+router.post('/uploadvariation', upload.single('file'), controller.uploadImageVariation);
+
+router.post('/deleteconversation/:id', controller.deleteConversation);
 
 module.exports = router;
 
