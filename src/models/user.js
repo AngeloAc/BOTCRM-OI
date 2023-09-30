@@ -56,6 +56,7 @@ const schema = new Schema({
                 time: { type: String },
                 data: { type: String }            
             }],
+            avatar: { type: String, default: 'src/assets/img/robo.jpg' },
             lastMessage:{type: String},
         }
     ]
