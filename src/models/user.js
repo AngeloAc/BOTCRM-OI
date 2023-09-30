@@ -68,7 +68,9 @@ const schema = new Schema({
             description: {type: String, default: null},
             messages: [{
                 text: {type: String, default:null},
-                isUser: { type: Boolean }
+                isUser: { type: Boolean },
+                time: { type: String },
+                data: { type: String }  
             }],
             lastMessage:{type: String},
         }

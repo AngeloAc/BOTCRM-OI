@@ -88,5 +88,7 @@ router.post('/uploadvariation', upload.single('file'), controller.uploadImageVar
 
 router.post('/deleteconversation/:id', controller.deleteConversation);
 
+router.post('/deletecode/:id', controller.deleteCode);
+
 module.exports = router;
 

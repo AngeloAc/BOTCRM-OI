@@ -383,7 +383,25 @@ exports.codeJava = (async (req, res, next) => {
                         if (javaCodeBlocks.length === 0) {
                             console.log('array vazio');
                         } else {
-                            user.code[index].messages = user.code[index].messages.concat({ text: javaCodeBlocks[0], isUser: false });                    // await user.save();
+                            const dataAtual = new Date();
+
+                            // Obtém os componentes da data
+                            const dia = dataAtual.getDate();
+                            const mes = dataAtual.getMonth() + 1; // Os meses começam em 0
+                            const ano = dataAtual.getFullYear();
+                            
+                            // Obtém os componentes da hora
+                            const horas = dataAtual.getHours();
+                            const minutos = dataAtual.getMinutes();
+                            // const segundos = dataAtual.getSeconds();
+                            
+                            // Formata a data e hora
+                            const dataFormatada = `${dia}/${mes}/${ano}`;
+                            const horaFormatada = `${horas}:${minutos}`;
+                            
+                            // Imprime na console
+        
+                            user.code[index].messages = user.code[index].messages.concat({ text: javaCodeBlocks[0], isUser: false, time: horaFormatada, data: dataFormatada  });                    // await user.save();
                             await user.save();
                         }
                         console.log(javaCodeBlocks);
@@ -777,6 +795,41 @@ exports.deleteConversation = (async (req, res, next) => {
         if (conversationIndex !== -1) {
             // Remover a conversa do array
             user.conversations.splice(conversationIndex, 1);
+    
+            // Salvar as alterações no banco de dados
+            await user.save();
+    
+            // console.log(`Conversa com ID foi deletada com sucesso.`);
+            return res.status(200).json({ message: "Conversa deletada com sucesso." });
+        } else {
+            // console.log(`Conversa com ID não encontrada.`);
+            return res.status(404).json({ message: "Conversa não encontrada." });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao deletar a conversa." });
+    }
+    
+});
+
+exports.deleteCode = (async (req, res, next) => {
+    
+    try {
+        
+        const userId = req.params.id;
+        const user = await User.findOne({ _id: userId });
+        const conversationID = req.body.conversationID
+        
+        // Encontrar o índice da conversa que você deseja deletar
+        const conversationIndex = user.code.findIndex((conversation) => {
+            
+            return conversation._id.toString() === conversationID; // Supondo que você tenha o ID da conversa que deseja deletar no corpo da requisição
+        });
+    
+        // Verificar se a conversa foi encontrada
+        if (conversationIndex !== -1) {
+            // Remover a conversa do array
+            user.code.splice(conversationIndex, 1);
     
             // Salvar as alterações no banco de dados
             await user.save();
