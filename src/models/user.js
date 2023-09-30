@@ -114,7 +114,7 @@ schema.methods.generateAuthToken = async function(){
             saldo: user.saldo,
             expire: user.expire,
             language: user.language,
-            codeStatus: user.codeStatus
+            codeStatus: user.codeStatus,
         }, 
         process.env.TOKEN_KEY);
     user.tokens = user.tokens.concat({token});
