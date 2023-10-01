@@ -355,7 +355,7 @@ exports.codeJava = (async (req, res, next) => {
         req.body.splice(0, req.body.length - 1);
         const user = await User.findById({ _id: req.params.id });
         const question = req.body[0].text;
-        console.log(req.params.message_id)
+        
         for (let index = 0; index < user.code.length; index++) {
             const element = user.code[index]._id.toString();
 
@@ -365,17 +365,16 @@ exports.codeJava = (async (req, res, next) => {
                 let promptInit = `Faça o código em ${user.code[index].code}, unicamente em ${user.code[index].code}. Por favor, inclua comentários e comece sempre o código com \`\`\`${user.code[index].code}. Obedeça aos seguintes detalhes: `;
                 if (user.code[index].code === 'javascript') {
                     promptInit = `Faça o código em javascript para P5.js, unicamente em javascript para P5.js. Por favor, inclua comentários e comece sempre o código com \`\`\`javascript. Obedeça aos seguintes detalhes: `;
-                    console.log('running p5js')
+                    
                 }
                 else if (user.code[index].code === 'c') {
                     promptInit = `Faça o código em usando a linguagem C para o microcontolador arduino, unicamente em usando a linguaguem C para arduino. Por favor, inclua comentários e comece sempre o código com \`\`\`c. Obedeça aos seguintes detalhes: `;
-                    console.log('running p5js')
+                    
                 }
                 else {
                     promptInit = `Faça o código em ${user.code[index].code}, unicamente em ${user.code[index].code}. Por favor, inclua comentários e comece sempre o código com \`\`\`${user.code[index].code}. Obedeça aos seguintes detalhes: `;
                 }
-                console.log(user.code[index].code);
-                console.log(promptInit + question);
+              
                 await chat.generateData(promptInit + question)
                     .then(async result => {
                         console.log(result)
@@ -404,7 +403,7 @@ exports.codeJava = (async (req, res, next) => {
                             user.code[index].messages = user.code[index].messages.concat({ text: javaCodeBlocks[0], isUser: false, time: horaFormatada, data: dataFormatada  });                    // await user.save();
                             await user.save();
                         }
-                        console.log(javaCodeBlocks);
+                        
 
                         return res.status(200).json({
                             resposta: result

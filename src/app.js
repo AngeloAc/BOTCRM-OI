@@ -6,6 +6,7 @@ const body_parser = require('body-parser');
 const dotenv = require('dotenv').config();
 const index = require('./router/index');
 const user = require('./router/user');
+// const chatRoute = require('./router/chatRoute');
 //const whatsapp = require('./router/whatsapp');
 //const dashboard = require('./router/dashbord'); comment
 
@@ -22,6 +23,8 @@ app.use(body_parser.urlencoded({ extended: false }));
 
 app.use('/', index);
 app.use('/user', user);
+
+// app.use('/api/chats', chatRoute);
 
 
 

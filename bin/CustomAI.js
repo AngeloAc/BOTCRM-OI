@@ -46,8 +46,11 @@ class CustomAI {
 
             // if (result.text === "I don't know." || result.text === "Eu não sei.") {
                 // Se a pergunta não estiver no PDF, usa o modelo OpenAI diretamente para responder
+               //final sheet
                 const openAIResult = await this.model.call(prompt);
                 return openAIResult;
+                //final sheet
+          
            
             // } else {
             //     console.log(result.text);
