@@ -13,7 +13,6 @@ const bcrypt = require('bcryptjs');
 const { generateImage, variationImage } = require('../../bin/controller');
 
 
-
 myRoot = (() => {
     const parent = path.resolve(__dirname, '..');
     const parent1 = path.resolve(parent, '..');
@@ -377,7 +376,7 @@ exports.codeJava = (async (req, res, next) => {
               
                 await chat.generateData(promptInit + question)
                     .then(async result => {
-                        console.log(result)
+                        
                         const javaCodeBlocks = extractJavaCodeBlocks(user.code[index].code, result);
                         if (javaCodeBlocks.length === 0) {
                             console.log('array vazio');
@@ -445,18 +444,25 @@ exports.getHistoryJavaChat = (async (req, res, next) => {
 });
 
 // Listar todos os produtos do banco de dados.
-exports.getAll = (midleware.checkToken, (req, res, next) => {
-    repositorio.getAll().
-        then(data => res.status(200).send({
-            data,
-            request: {
-                tipo: "GET",
-                descricao: "",
-                url: url
+exports.getAll = (async (req, res, next) => {
+    let arrayUser = [];
+    const user = await  User.find()
+        .then(data => { 
+            for (let index = 0; index < data.length; index++) {
+                arrayUser.push(data[index].name)
+                
             }
-        })
-        ).
-        catch(error =>
+            res.status(200).send({
+                data: arrayUser,
+                request: {
+                    tipo: "GET",
+                    descricao: "",
+                    url: url
+                }
+            })
+        }
+        )
+        .catch(error =>
             res.status(200).send({
                 message: "Ocorreu um erro ao listar os produtos.",
                 versao: "0.0.01",
@@ -467,6 +473,8 @@ exports.getAll = (midleware.checkToken, (req, res, next) => {
                 }
             })
         );
+
+  
 
 });
 

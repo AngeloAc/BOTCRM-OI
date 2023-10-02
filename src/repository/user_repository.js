@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 
 // Listar todos os produtos do banco de dados.
-exports.getAll = () => {
-  return User.find();
+exports.getAll = async () => {
+  return await  User.find();
 };
 
 // ===> Repositorio responsavel por registar um novo user (POST) localhost:3030/api/v1/register

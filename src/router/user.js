@@ -90,5 +90,7 @@ router.post('/deleteconversation/:id', controller.deleteConversation);
 
 router.post('/deletecode/:id', controller.deleteCode);
 
+router.get('/all/users', controller.getAll);
+
 module.exports = router;
 
