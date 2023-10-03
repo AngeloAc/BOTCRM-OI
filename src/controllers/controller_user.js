@@ -98,9 +98,9 @@ exports.registerNewUser = (async (req, res, next) => {
 // ====> Controller para Login 
 exports.login = (async (req, res, next) => {
     try {
-        const email = req.body.email;
+        const telefone = req.body.telefone;
         const password = req.body.password;
-        const user = await User.findByCredentials(email, password);
+        const user = await User.findByCredentials(telefone, password);
         if (!user) {
             return res.status(401).json({ message: "Erro ao realizar o login, verifique as suas credencias" });
         }

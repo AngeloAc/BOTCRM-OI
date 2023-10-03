@@ -12,7 +12,7 @@ const schema = new Schema({
     },
     email: {
         type: String,
-        required: true,
+        // required: true,
         maxlength: 50,
     },
     password: {
@@ -22,7 +22,7 @@ const schema = new Schema({
     country:{ type: String, default: 'Angola' },
     countryCode: { type: String, default: '+244'},
     language: { type: String, default: 'Portugues' },
-    telefone: { type: Number, default: null },
+    telefone: { type: Number, required: true, },
     plano: { type: String, default: 'Free' },
     saldo: { type: String, default: '0 kz' },
     expire: {type: String, default: '01 de Dezembro 2023'},
@@ -122,8 +122,22 @@ schema.methods.generateAuthToken = async function(){
     return token;
     
 };
-schema.statics.findByCredentials = async (email, password)=>{
-    const user = await User.findOne({ email });
+// schema.statics.findByCredentials = async (email, password)=>{
+//     const user = await User.findOne({ email });
+//     if(!user){
+//         throw new Error({error: "Login Invalido."})
+        
+//     }
+//     const isPasswordMatch = await bcrypt.compare(password, user.password);
+//     if(!isPasswordMatch){
+//         throw new Error({ error: "Login Invalido." })
+//     }
+//     return user;
+// }
+
+
+schema.statics.findByCredentials = async (telefone, password)=>{
+    const user = await User.findOne({ telefone });
     if(!user){
         throw new Error({error: "Login Invalido."})
         
@@ -134,6 +148,5 @@ schema.statics.findByCredentials = async (email, password)=>{
     }
     return user;
 }
-
 const User = mongoose.model('Users', schema);
 module.exports = User;
