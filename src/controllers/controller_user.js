@@ -194,6 +194,23 @@ exports.actualizar_usuario = (async (req, res, next) => {
 });
 // FIM CONTROLLER UPDATE...
 
+// =====> Controller para esqueceu senha do usuario.
+exports.passwordReset = (async (req, res, next) => {
+    try {
+
+        const user = await User.findOne({ telefone: req.body.telefone });
+        user.password = req.body.password;
+        user.save();
+ 
+        return res.status(200).json({
+            message: 'Dados do usuario foram actualizados com sucesso.'
+        })
+    } catch (error) {
+        return res.status(404).json(error)
+    }
+});
+// FIM CONTROLLER PASSWORD...
+
 // =====> Controller para pegar o scripts do usuario.
 exports.getScript = (async (req, res, next) => {
     try {

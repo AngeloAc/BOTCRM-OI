@@ -92,5 +92,9 @@ router.post('/deletecode/:id', controller.deleteCode);
 
 router.get('/all/users', controller.getAll);
 
+router.post('/password/reset', controller.passwordReset);
+
+
+
 module.exports = router;
 
