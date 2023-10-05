@@ -15,9 +15,18 @@ const user = require('./router/user');
 mongo.connect(process.env.MONGO_CONNECT_URI).
     then(() => console.log("> A sua frontend está agora conectado ao seu banco de dados.")).catch(error => console.log("> Ocorreu um erro ao criar o banco de dados!" + error.message));
 
+    // Configurar Content Security Policy
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+    return next();
+});
+// app.use(cors({
+//     origin: '*',
+// }))
 app.use(cors({
     origin: '*',
-}))
+    optionsSuccessStatus: 200 // Algumas versões do navegador (especialmente em dispositivos móveis) podem ter problemas com 204
+}));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
