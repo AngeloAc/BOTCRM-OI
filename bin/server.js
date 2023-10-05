@@ -8,7 +8,7 @@ require('dotenv').config(); // importando e configurando o dotenv
 
 const options = {
   key: fs.readFileSync('/home/pro/chave-privada.key'),
-  cert: fs.readFileSync('/home/pro/certificado.crt')
+  cert: fs.readFileSync('/etc/ssl/certs/ca-certificates.crt')
 };
 
 
