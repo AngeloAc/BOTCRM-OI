@@ -17,7 +17,9 @@ mongo.connect(process.env.MONGO_CONNECT_URI).
 
     // Configurar Content Security Policy
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+    res.header("Access-Control-Allow-Origin", "https://chat.startic.ao"); // Substitua com seu domínio
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
 });
 // app.use(cors({
