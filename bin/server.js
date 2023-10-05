@@ -13,7 +13,7 @@ const options = {
 
 
 const port = normalizePort(process.env.PORT || 3030);
-const server = https.createServer(app);
+const server = https.createServer(options, app);
 
 server.listen(port);
 console.log("> Servidor rodando na porta: " + port);
