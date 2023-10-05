@@ -26,6 +26,7 @@ const schema = new Schema({
     plano: { type: String, default: 'Free' },
     saldo: { type: String, default: '0 kz' },
     expire: {type: String, default: '01 de Dezembro 2023'},
+    isWhatsappActive: {type: Boolean, default: true},
     porta: {
         type: String,
     },
@@ -115,6 +116,7 @@ schema.methods.generateAuthToken = async function(){
             expire: user.expire,
             language: user.language,
             codeStatus: user.codeStatus,
+            isWhatsappActive: user.isWhatsappActive,
         }, 
         process.env.TOKEN_KEY);
     user.tokens = user.tokens.concat({token});

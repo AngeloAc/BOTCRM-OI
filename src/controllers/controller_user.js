@@ -501,7 +501,6 @@ exports.getAll = (async (req, res, next) => {
 exports.getUser = (async (req, res, next) => {
     try {
         const user = await User.findById({ _id: req.params.id });
-
         return res.status(200).json(user);
     } catch (error) {
         return res.status(200).json({ error })
@@ -540,6 +539,18 @@ exports.getHistoryChat = (async (req, res, next) => {
             error: error
         })
     }
+});
+
+exports.whatsappToggle = (async (req, res, next) => {
+
+    const user = await User.findByIdAndUpdate({ _id: req.params.id }, {
+        $set:{
+            isWhatsappActive: req.body.toggle
+        }
+    });
+
+    return res.status(200).json({message: "ok"})
+
 });
 
 exports.whatsappWeb_connect = (async (req, res, next) => {

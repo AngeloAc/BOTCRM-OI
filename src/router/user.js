@@ -94,6 +94,10 @@ router.get('/all/users', controller.getAll);
 
 router.post('/password/reset', controller.passwordReset);
 
+router.post('/app/whatsapp/toogle/:id', controller.whatsappToggle);
+
+
+
 
 
 module.exports = router;
