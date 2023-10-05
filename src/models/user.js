@@ -24,8 +24,8 @@ const schema = new Schema({
     language: { type: String, default: 'Portugues' },
     telefone: { type: Number, required: true, },
     plano: { type: String, default: 'Free' },
-    saldo: { type: String, default: '0 kz' },
-    expire: {type: String, default: '01 de Dezembro 2023'},
+    saldo: { type: String, default: '0' },
+    expire: {type: String, default: '01 de Novembro 2023'},
     isWhatsappActive: {type: Boolean, default: true},
     porta: {
         type: String,
