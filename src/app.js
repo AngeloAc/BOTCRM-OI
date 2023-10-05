@@ -17,18 +17,18 @@ mongo.connect(process.env.MONGO_CONNECT_URI).
 
     // Configurar Content Security Policy
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://chat.startic.ao"); // Substitua com seu domínio
+    res.header("Access-Control-Allow-Origin", "*"); // Substitua com seu domínio
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    app.use(cors({
+        
+    }));
     return next();
 });
 // app.use(cors({
 //     origin: '*',
 // }))
-app.use(cors({
-    origin: 'http://104.255.216.215:3030',
-    optionsSuccessStatus: 200 // Algumas versões do navegador (especialmente em dispositivos móveis) podem ter problemas com 204
-}));
+
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
