@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 //     origin: '*',
 // }))
 app.use(cors({
-    origin: '*',
+    origin: 'https://104.255.216.215',
     optionsSuccessStatus: 200 // Algumas versões do navegador (especialmente em dispositivos móveis) podem ter problemas com 204
 }));
 app.use(body_parser.json());
