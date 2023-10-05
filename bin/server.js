@@ -2,11 +2,11 @@
 // create a server - bot
 const app = require('../src/app'); // importando os dados do App
 const express = require('express'); // importando express
-const http = require('http'); // importando o http
+const https = require('https'); // importando o http
 require('dotenv').config(); // importando e configurando o dotenv
 
 const port = normalizePort(process.env.PORT || 3030);
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 server.listen(port);
 console.log("> Servidor rodando na porta: " + port);
