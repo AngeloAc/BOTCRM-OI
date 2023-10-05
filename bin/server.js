@@ -5,6 +5,12 @@ const express = require('express'); // importando express
 const https = require('https'); // importando o http
 require('dotenv').config(); // importando e configurando o dotenv
 
+const options = {
+  key: fs.readFileSync('/home/pro/chave-privada.key'),
+  cert: fs.readFileSync('/home/pro/certificado.crt')
+};
+
+
 const port = normalizePort(process.env.PORT || 3030);
 const server = https.createServer(app);
 
