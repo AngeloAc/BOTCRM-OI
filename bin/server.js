@@ -3,6 +3,7 @@
 const app = require('../src/app'); // importando os dados do App
 const express = require('express'); // importando express
 const https = require('https'); // importando o http
+const fs = require('fs');
 require('dotenv').config(); // importando e configurando o dotenv
 
 const options = {
