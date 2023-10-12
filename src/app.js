@@ -18,14 +18,14 @@ mongo.connect(process.env.MONGO_CONNECT_URI).
     // Configurar Content Security Policy
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*"); // Substitua com seu domínio
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    // res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-app.use(cors())
+// app.use(cors())
     return next();
 });
-// app.use(cors({
-//     origin: '*',
-// }))
+app.use(cors({
+    origin: '*',
+}))
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
