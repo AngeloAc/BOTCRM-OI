@@ -33,7 +33,8 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
 app.use('/', index);
-app.use('/user', user);
+// app.use('/user', user);
+app.use('/apiserver', user);
 
 // app.use('/api/chats', chatRoute);
 
