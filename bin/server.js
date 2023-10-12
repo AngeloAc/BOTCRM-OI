@@ -2,13 +2,14 @@
 // create a server - bot
 const app = require('../src/app'); // importando os dados do App
 const express = require('express'); // importando express
-const https = require('https'); // importando o http
+const https = require('https'); // importando o https
+// const http = require('http'); // importando o http
 const fs = require('fs');
 require('dotenv').config(); // importando e configurando o dotenv
 
 const options = {
-  key: fs.readFileSync('/etc/apache2/certificate/apache.key'),
-  cert: fs.readFileSync('/etc/apache2/certificate/apache-certificate.crt')
+  key: fs.readFileSync('/etc/letsencrypt/live/app.startic.ao/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/app.startic.ao/fullchain.pem')
 };
 
 
